@@ -1,6 +1,6 @@
 body {
-  opacity: 1;
-  transition: opacity 0.2s ease;
+  opacity: 1 !important;
+  transition: opacity 0.2s ease !important;
 }
 
 
@@ -9,25 +9,25 @@ body {
 ========================= */
 
 .rego-tool {
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
 }
 
 .rego-search-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 
-  width: 100%;
-  max-width: 480px;
-  margin-bottom: 18px;
+  width: 100% !important;
+  max-width: 480px !important;
+  margin-bottom: 18px !important;
 
-  padding: 5px 14px 5px 5px;
+  padding: 5px 14px 5px 5px !important;
 
-  background: #12151a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
+  background: #12151a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 999px !important;
 
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.3),
@@ -40,32 +40,32 @@ body {
 }
 
 .rego-search-bar.is-focused {
-  border-color: rgba(101, 183, 70, 0.55);
+  border-color: rgba(101, 183, 70, 0.55) !important;
   box-shadow:
     0 0 0 4px rgba(101, 183, 70, 0.16),
     0 12px 30px rgba(0, 0, 0, 0.28);
-  transform: translateY(-1px);
+  transform: translateY(-1px) !important;
 }
 
 /* Truck / search icon button */
 
 .rego-search-icon {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-  width: 40px;
-  height: 40px;
+  width: 40px !important;
+  height: 40px !important;
 
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
 
-  background: #65b746;
-  color: #12151a;
+  background: #65b746 !important;
+  color: #12151a !important;
 
-  cursor: pointer;
+  cursor: pointer !important;
 
   transition:
     background 0.2s ease,
@@ -73,42 +73,42 @@ body {
 }
 
 .rego-search-icon:hover {
-  background: #7fcf5e;
+  background: #7fcf5e !important;
 }
 
 .rego-search-icon:active {
-  transform: scale(0.92);
+  transform: scale(0.92) !important;
 }
 
 .rego-truck-svg {
-  width: 24px;
-  height: 15px;
-  overflow: visible;
+  width: 24px !important;
+  height: 15px !important;
+  overflow: visible !important;
 }
 
 .rego-truck-svg .rego-truck-body,
 .rego-truck-svg .rego-truck-cab {
-  fill: currentColor;
+  fill: currentColor !important;
 }
 
 .rego-truck-svg .rego-truck-window {
-  fill: #12151a;
+  fill: #12151a !important;
 }
 
 .rego-truck-svg .rego-wheel circle {
-  fill: #12151a;
+  fill: #12151a !important;
 }
 
 .rego-truck-svg .rego-wheel line {
-  stroke: #12151a;
-  stroke-width: 1.1;
-  stroke-linecap: round;
+  stroke: #12151a !important;
+  stroke-width: 1.1 !important;
+  stroke-linecap: round !important;
 }
 
 /* Wheels spin while the bar is focused — searching mode */
 
 .rego-search-bar.is-focused .rego-wheel {
-  animation: rego-wheel-spin 0.8s linear infinite;
+  animation: rego-wheel-spin 0.8s linear infinite !important;
 }
 
 @keyframes rego-wheel-spin {
@@ -119,49 +119,49 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .rego-search-bar.is-focused .rego-wheel {
-    animation: none;
+    animation: none !important;
   }
 }
 
 /* Text input */
 
 .rego-tool-search-input {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
 
-  padding: 10px 2px;
+  padding: 10px 2px !important;
 
-  border: 0;
-  outline: 0;
-  background: transparent;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
 
-  color: #f5f7f4;
-  font-size: 15px;
-  font-weight: 500;
+  color: #f5f7f4 !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
 
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 .rego-tool-search-input::placeholder {
-  color: rgba(245, 247, 244, 0.42);
-  font-weight: 400;
+  color: rgba(245, 247, 244, 0.42) !important;
+  font-weight: 400 !important;
 }
 
 /* Inline hint — fades away once you focus or start typing */
 
 .rego-search-hint {
-  flex: none;
-  overflow: hidden;
+  flex: none !important;
+  overflow: hidden !important;
 
-  max-width: 160px;
-  margin-left: 2px;
+  max-width: 160px !important;
+  margin-left: 2px !important;
 
-  color: rgba(245, 247, 244, 0.32);
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
+  color: rgba(245, 247, 244, 0.32) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
 
-  opacity: 1;
+  opacity: 1 !important;
 
   transition:
     opacity 0.2s ease,
@@ -171,33 +171,33 @@ body {
 
 .rego-search-bar.is-focused .rego-search-hint,
 .rego-search-bar.has-value .rego-search-hint {
-  opacity: 0;
-  max-width: 0;
-  margin-left: 0;
+  opacity: 0 !important;
+  max-width: 0 !important;
+  margin-left: 0 !important;
 }
 
 /* Clear (×) button — scales in once there's text */
 
 .rego-clear-button {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
 
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
 
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(245, 247, 244, 0.75);
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(245, 247, 244, 0.75) !important;
 
-  cursor: pointer;
+  cursor: pointer !important;
 
-  opacity: 0;
-  transform: scale(0);
+  opacity: 0 !important;
+  transform: scale(0) !important;
 
   transition:
     transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -206,27 +206,27 @@ body {
 }
 
 .rego-clear-button svg {
-  width: 11px;
-  height: 11px;
+  width: 11px !important;
+  height: 11px !important;
 }
 
 .rego-search-bar.has-value .rego-clear-button {
-  opacity: 1;
-  transform: scale(1);
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
 .rego-clear-button:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.18) !important;
 }
 
 .rego-results-found-text {
-  display: none;
+  display: none !important;
 
-  margin-bottom: 14px;
+  margin-bottom: 14px !important;
 
-  color: #68716c;
-  font-size: 13px;
-  font-weight: 600;
+  color: #68716c !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
 }
 
 
@@ -235,16 +235,16 @@ body {
 ========================= */
 
 .result-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 12px !important;
 }
 
 .result-grid > div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin-bottom: 20px !important;
 }
 
 
@@ -253,13 +253,13 @@ body {
 ========================================================= */
 
 .rego-result-card {
-  width: 100%;
-  margin-bottom: 20px;
-  overflow: hidden;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  overflow: hidden !important;
 
-  background: #ffffff;
-  border: 1px solid #e1e5e3;
-  border-radius: 14px;
+  background: #ffffff !important;
+  border: 1px solid #e1e5e3 !important;
+  border-radius: 14px !important;
 
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.05),
@@ -282,62 +282,62 @@ body {
 ========================================================= */
 
 .rego-result-header {
-  padding: 22px 24px 20px;
+  padding: 22px 24px 20px !important;
 
-  background: #f8faf9;
+  background: #f8faf9 !important;
 
-  border-bottom: 1px solid #e2e7e4;
+  border-bottom: 1px solid #e2e7e4 !important;
 }
 
 .rego-result-title {
-  margin: 0 0 16px;
+  margin: 0 0 16px !important;
 
-  color: #171b19;
+  color: #171b19 !important;
 
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
 }
 
 
 /* Vehicle information */
 
 .rego-result-information {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
 }
 
 .rego-result-field {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 
-  padding: 8px 12px;
+  padding: 8px 12px !important;
 
-  background: #ffffff;
+  background: #ffffff !important;
 
-  border: 1px solid #e0e5e2;
-  border-radius: 7px;
+  border: 1px solid #e0e5e2 !important;
+  border-radius: 7px !important;
 
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
 .rego-result-label {
-  color: #68716c;
+  color: #68716c !important;
 
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
 }
 
 .rego-result-value {
-  color: #171b19;
+  color: #171b19 !important;
 
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 14px !important;
+  font-weight: 700 !important;
 }
 
 
@@ -346,27 +346,27 @@ body {
 ========================================================= */
 
 .rego-product-header {
-  display: grid;
+  display: grid !important;
   grid-template-columns:
     70px
     120px
     minmax(220px, 1fr)
     110px
     120px;
-  align-items: center;
-  padding: 11px 20px;
-  background: #f1f4f2;
-  border-bottom: 1px solid #dfe4e1;
-  color: #68716c;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  align-items: center !important;
+  padding: 11px 20px !important;
+  background: #f1f4f2 !important;
+  border-bottom: 1px solid #dfe4e1 !important;
+  color: #68716c !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
 }
 
 .rego-product-header-cell.is-price,
 .rego-product-header-cell.is-qty {
-  text-align: center;
+  text-align: center !important;
 }
 
 
@@ -375,7 +375,7 @@ body {
 ========================================================= */
 
 .rego-product-row {
-  display: grid;
+  display: grid !important;
 
   grid-template-columns:
     70px
@@ -384,14 +384,14 @@ body {
     110px
     120px;
 
-  align-items: center;
+  align-items: center !important;
 
-  min-height: 76px;
-  padding: 10px 20px;
+  min-height: 76px !important;
+  padding: 10px 20px !important;
 
-  background: #ffffff;
+  background: #ffffff !important;
 
-  border-bottom: 1px solid #e9ecea;
+  border-bottom: 1px solid #e9ecea !important;
 
   transition:
     background 0.15s ease,
@@ -399,22 +399,22 @@ body {
 }
 
 .rego-product-row:last-child {
-  border-bottom: 0;
+  border-bottom: 0 !important;
 }
 
 .rego-product-row:hover {
-  background: #f8fbf9;
+  background: #f8fbf9 !important;
 }
 
 
 /* Selected product */
 
 .rego-product-row.is-selected {
-  background: #f0faf5;
+  background: #f0faf5 !important;
 
-  border-left: 4px solid #009b4d;
+  border-left: 4px solid #009b4d !important;
 
-  padding-left: 16px;
+  padding-left: 16px !important;
 }
 
 
@@ -423,23 +423,23 @@ body {
 ========================================================= */
 
 .rego-product-image-cell {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
 }
 
 .rego-product-image {
-  width: 54px;
-  height: 54px;
+  width: 54px !important;
+  height: 54px !important;
 
-  object-fit: contain;
+  object-fit: contain !important;
 
-  background: #f5f7f6;
+  background: #f5f7f6 !important;
 
-  border: 1px solid #e1e6e3;
-  border-radius: 8px;
+  border: 1px solid #e1e6e3 !important;
+  border-radius: 8px !important;
 
-  padding: 3px;
+  padding: 3px !important;
 }
 
 
@@ -448,12 +448,12 @@ body {
 ========================================================= */
 
 .rego-product-part-number {
-  color: #65b746;
+  color: #65b746 !important;
 
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 13px !important;
+  font-weight: 800 !important;
 
-  letter-spacing: 0.01em;
+  letter-spacing: 0.01em !important;
 }
 
 
@@ -462,13 +462,13 @@ body {
 ========================================================= */
 
 .rego-product-name {
-  padding-right: 20px;
+  padding-right: 20px !important;
 
-  color: #252b28;
+  color: #252b28 !important;
 
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 500;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  font-weight: 500 !important;
 }
 
 
@@ -477,12 +477,12 @@ body {
 ========================================================= */
 
 .rego-product-price {
-  color: #151a17;
+  color: #151a17 !important;
 
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 14px !important;
+  font-weight: 800 !important;
 
-  text-align: center;
+  text-align: center !important;
 }
 
 
@@ -491,46 +491,46 @@ body {
 ========================================================= */
 
 .rego-product-qty {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .rego-qty-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 3px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 3px !important;
 
-  padding: 3px;
+  padding: 3px !important;
 
-  background: #f2f5f3;
+  background: #f2f5f3 !important;
 
-  border: 1px solid #dce2df;
-  border-radius: 8px;
+  border: 1px solid #dce2df !important;
+  border-radius: 8px !important;
 }
 
 .rego-qty-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-  width: 30px;
-  height: 30px;
+  width: 30px !important;
+  height: 30px !important;
 
-  padding: 0;
+  padding: 0 !important;
 
-  border: 0;
-  border-radius: 6px;
+  border: 0 !important;
+  border-radius: 6px !important;
 
-  background: #ffffff;
+  background: #ffffff !important;
 
-  color: #39413d;
+  color: #39413d !important;
 
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 16px !important;
+  font-weight: 700 !important;
 
-  cursor: pointer;
+  cursor: pointer !important;
 
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 
   transition:
     background 0.15s ease,
@@ -539,43 +539,43 @@ body {
 }
 
 .rego-qty-button:hover {
-  background: #65b746;
-  color: #ffffff;
+  background: #65b746 !important;
+  color: #ffffff !important;
 
-  transform: translateY(-1px);
+  transform: translateY(-1px) !important;
 }
 
 .rego-qty-button:active {
-  transform: translateY(0);
+  transform: translateY(0) !important;
 }
 
 .rego-qty-input {
-  width: 34px;
-  height: 30px;
+  width: 34px !important;
+  height: 30px !important;
 
-  padding: 0;
+  padding: 0 !important;
 
-  border: 0;
-  outline: 0;
+  border: 0 !important;
+  outline: 0 !important;
 
-  background: transparent;
+  background: transparent !important;
 
-  color: #171b19;
+  color: #171b19 !important;
 
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 13px !important;
+  font-weight: 800 !important;
 
-  text-align: center;
+  text-align: center !important;
 }
 
 .rego-qty-input::-webkit-inner-spin-button,
 .rego-qty-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 
 .rego-qty-input {
-  appearance: textfield;
+  appearance: textfield !important;
 }
 
 
@@ -584,43 +584,43 @@ body {
 ========================================================= */
 
 .rego-result-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 15px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 15px !important;
 
-  padding: 16px 20px;
+  padding: 16px 20px !important;
 
-  background: #f7f9f8;
+  background: #f7f9f8 !important;
 
-  border-top: 1px solid #e2e6e4;
+  border-top: 1px solid #e2e6e4 !important;
 }
 
 .rego-selected-text {
-  margin-right: auto;
+  margin-right: auto !important;
 
-  color: #68716c;
+  color: #68716c !important;
 
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12px !important;
+  font-weight: 600 !important;
 }
 
 .rego-add-cart-button {
-  padding: 11px 20px;
+  padding: 11px 20px !important;
 
-  border: 0;
-  border-radius: 7px;
+  border: 0 !important;
+  border-radius: 7px !important;
 
-  background: #65b746;
+  background: #65b746 !important;
 
-  color: #ffffff;
+  color: #ffffff !important;
 
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 12px !important;
+  font-weight: 800 !important;
 
-  cursor: pointer;
+  cursor: pointer !important;
 
-  box-shadow: 0 2px 5px rgba(0, 155, 77, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 155, 77, 0.2) !important;
 
   transition:
     background 0.15s ease,
@@ -629,15 +629,15 @@ body {
 }
 
 .rego-add-cart-button:hover {
-  background: #007f3f;
+  background: #007f3f !important;
 
-  transform: translateY(-1px);
+  transform: translateY(-1px) !important;
 
-  box-shadow: 0 4px 9px rgba(0, 155, 77, 0.25);
+  box-shadow: 0 4px 9px rgba(0, 155, 77, 0.25) !important;
 }
 
 .rego-add-cart-button:active {
-  transform: translateY(0);
+  transform: translateY(0) !important;
 }
 
 
@@ -648,46 +648,46 @@ body {
 @media (max-width: 767px) {
 
   .rego-search-bar {
-    max-width: 100%;
+    max-width: 100% !important;
   }
 
   .rego-search-hint {
-    display: none;
+    display: none !important;
   }
 
   .rego-result-card {
-    border-radius: 11px;
+    border-radius: 11px !important;
   }
 
   .rego-result-header {
-    padding: 18px 16px;
+    padding: 18px 16px !important;
   }
 
   .rego-result-title {
-    font-size: 18px;
+    font-size: 18px !important;
   }
 
   .rego-result-information {
-    gap: 7px;
+    gap: 7px !important;
   }
 
   .rego-result-field {
-    padding: 7px 10px;
+    padding: 7px 10px !important;
   }
 
   .rego-result-label {
-    font-size: 10px;
+    font-size: 10px !important;
   }
 
   .rego-result-value {
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
 
   /* Hide desktop column headings */
 
   .rego-product-header {
-    display: none;
+    display: none !important;
   }
 
 
@@ -699,69 +699,69 @@ body {
       1fr
       90px;
 
-    gap: 8px 10px;
+    gap: 8px 10px !important;
 
-    min-height: 78px;
+    min-height: 78px !important;
 
-    padding: 12px 15px;
+    padding: 12px 15px !important;
   }
 
 
   .rego-product-image {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
   }
 
 
   .rego-product-part-number {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
 
-    align-self: end;
+    align-self: end !important;
   }
 
 
   .rego-product-name {
-    grid-column: 2;
-    grid-row: 2;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
 
-    padding-right: 0;
+    padding-right: 0 !important;
 
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
 
   .rego-product-price {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
 
-    align-self: end;
+    align-self: end !important;
 
-    text-align: right;
+    text-align: right !important;
   }
 
 
   .rego-product-qty {
-    grid-column: 3;
-    grid-row: 2;
+    grid-column: 3 !important;
+    grid-row: 2 !important;
 
-    justify-content: flex-end;
+    justify-content: flex-end !important;
   }
 
 
   /* Footer */
 
   .rego-result-footer {
-    gap: 10px;
+    gap: 10px !important;
 
-    padding: 13px 15px;
+    padding: 13px 15px !important;
   }
 
   .rego-selected-text {
-    font-size: 11px;
+    font-size: 11px !important;
   }
 
   .rego-add-cart-button {
-    padding: 10px 15px;
+    padding: 10px 15px !important;
   }
 }
