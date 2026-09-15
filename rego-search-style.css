@@ -1,0 +1,588 @@
+body {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.rego-tool {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.rego-tool-search-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 11px 14px;
+  margin-right: 10px;
+  margin-bottom: 14px;
+
+  border: 1px solid #dce2df;
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+}
+
+.rego-tool-search-button {
+  padding: 11px 20px;
+  margin-bottom: 14px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #65b746;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.rego-tool-search-button:hover {
+  background: #007f3f;
+}
+
+.rego-results-found-text {
+  display: none;
+
+  margin-bottom: 14px;
+
+  color: #68716c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.result-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   RESULT CARD
+========================================================= */
+
+.rego-result-card {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+
+  background: #ffffff;
+  border: 1px solid #e1e5e3;
+  border-radius: 14px;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 10px 30px rgba(0, 0, 0, 0.07);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.rego-result-card:hover {
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.06),
+    0 14px 35px rgba(0, 0, 0, 0.09);
+}
+
+
+/* =========================================================
+   VEHICLE HEADER
+========================================================= */
+
+.rego-result-header {
+  padding: 22px 24px 20px;
+
+  background: #f8faf9;
+
+  border-bottom: 1px solid #e2e7e4;
+}
+
+.rego-result-title {
+  margin: 0 0 16px;
+
+  color: #171b19;
+
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+
+/* Vehicle information */
+
+.rego-result-information {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rego-result-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px;
+
+  background: #ffffff;
+
+  border: 1px solid #e0e5e2;
+  border-radius: 7px;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.rego-result-label {
+  color: #68716c;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rego-result-value {
+  color: #171b19;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PRODUCT HEADER
+========================================================= */
+
+.rego-product-header {
+  display: grid;
+  grid-template-columns:
+    70px
+    120px
+    minmax(220px, 1fr)
+    110px
+    120px;
+  align-items: center;
+  padding: 11px 20px;
+  background: #f1f4f2;
+  border-bottom: 1px solid #dfe4e1;
+  color: #68716c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rego-product-header-cell.is-price,
+.rego-product-header-cell.is-qty {
+  text-align: center;
+}
+
+
+/* =========================================================
+   PRODUCT ROW
+========================================================= */
+
+.rego-product-row {
+  display: grid;
+
+  grid-template-columns:
+    70px
+    120px
+    minmax(220px, 1fr)
+    110px
+    120px;
+
+  align-items: center;
+
+  min-height: 76px;
+  padding: 10px 20px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e9ecea;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.rego-product-row:last-child {
+  border-bottom: 0;
+}
+
+.rego-product-row:hover {
+  background: #f8fbf9;
+}
+
+
+/* Selected product */
+
+.rego-product-row.is-selected {
+  background: #f0faf5;
+
+  border-left: 4px solid #009b4d;
+
+  padding-left: 16px;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.rego-product-image-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.rego-product-image {
+  width: 54px;
+  height: 54px;
+
+  object-fit: contain;
+
+  background: #f5f7f6;
+
+  border: 1px solid #e1e6e3;
+  border-radius: 8px;
+
+  padding: 3px;
+}
+
+
+/* =========================================================
+   PART NUMBER
+========================================================= */
+
+.rego-product-part-number {
+  color: #65b746;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.01em;
+}
+
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.rego-product-name {
+  padding-right: 20px;
+
+  color: #252b28;
+
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.rego-product-price {
+  color: #151a17;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.rego-product-qty {
+  display: flex;
+  justify-content: center;
+}
+
+.rego-qty-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  padding: 3px;
+
+  background: #f2f5f3;
+
+  border: 1px solid #dce2df;
+  border-radius: 8px;
+}
+
+.rego-qty-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  color: #39413d;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.rego-qty-button:hover {
+  background: #65b746;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.rego-qty-button:active {
+  transform: translateY(0);
+}
+
+.rego-qty-input {
+  width: 34px;
+  height: 30px;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #171b19;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  text-align: center;
+}
+
+.rego-qty-input::-webkit-inner-spin-button,
+.rego-qty-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rego-qty-input {
+  appearance: textfield;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.rego-result-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+
+  padding: 16px 20px;
+
+  background: #f7f9f8;
+
+  border-top: 1px solid #e2e6e4;
+}
+
+.rego-selected-text {
+  margin-right: auto;
+
+  color: #68716c;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rego-add-cart-button {
+  padding: 11px 20px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #65b746;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 5px rgba(0, 155, 77, 0.2);
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.rego-add-cart-button:hover {
+  background: #007f3f;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 9px rgba(0, 155, 77, 0.25);
+}
+
+.rego-add-cart-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .rego-result-card {
+    border-radius: 11px;
+  }
+
+  .rego-result-header {
+    padding: 18px 16px;
+  }
+
+  .rego-result-title {
+    font-size: 18px;
+  }
+
+  .rego-result-information {
+    gap: 7px;
+  }
+
+  .rego-result-field {
+    padding: 7px 10px;
+  }
+
+  .rego-result-label {
+    font-size: 10px;
+  }
+
+  .rego-result-value {
+    font-size: 13px;
+  }
+
+
+  /* Hide desktop column headings */
+
+  .rego-product-header {
+    display: none;
+  }
+
+
+  /* Product */
+
+  .rego-product-row {
+    grid-template-columns:
+      55px
+      1fr
+      90px;
+
+    gap: 8px 10px;
+
+    min-height: 78px;
+
+    padding: 12px 15px;
+  }
+
+
+  .rego-product-image {
+    width: 50px;
+    height: 50px;
+  }
+
+
+  .rego-product-part-number {
+    grid-column: 2;
+    grid-row: 1;
+
+    align-self: end;
+  }
+
+
+  .rego-product-name {
+    grid-column: 2;
+    grid-row: 2;
+
+    padding-right: 0;
+
+    font-size: 13px;
+  }
+
+
+  .rego-product-price {
+    grid-column: 3;
+    grid-row: 1;
+
+    align-self: end;
+
+    text-align: right;
+  }
+
+
+  .rego-product-qty {
+    grid-column: 3;
+    grid-row: 2;
+
+    justify-content: flex-end;
+  }
+
+
+  /* Footer */
+
+  .rego-result-footer {
+    gap: 10px;
+
+    padding: 13px 15px;
+  }
+
+  .rego-selected-text {
+    font-size: 11px;
+  }
+
+  .rego-add-cart-button {
+    padding: 10px 15px;
+  }
+}
