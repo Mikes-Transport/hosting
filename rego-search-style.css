@@ -129,13 +129,13 @@ body {
   flex: 1 1 auto !important;
   min-width: 0 !important;
 
-  padding: 10px 2px !important;
+  padding: 50px 2px !important;
 
   border: 0 !important;
   outline: 0 !important;
   background: transparent !important;
 
-  color: #f5f7f4 !important;
+  color: red !important;
   font-size: 15px !important;
   font-weight: 500 !important;
 
