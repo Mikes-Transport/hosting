@@ -3155,15 +3155,14 @@ filter:blur(2px) grayscale(90%)
 
 .db-left-content.editing{
     width:100%;
-    height:100vh;
     min-height:0;
     overflow:hidden;
 }
 
 .et-edit-panel{
-    height:100%;
-    max-height:100%;
-    min-height:0;
+    width:100%;
+    height:calc(100vh - 120px);
+    max-height:calc(100vh - 120px);
     overflow-y:auto;
     overflow-x:hidden;
     box-sizing:border-box;
