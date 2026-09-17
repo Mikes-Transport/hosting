@@ -1,26 +1,3 @@
-<style>
-body{opacity:1;transition:opacity .2s ease}
-.refresh-icon.spinning,.refresh-icon-sh.spinning{animation:spinRefresh .8s linear infinite}
-@keyframes spinRefresh{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.activity-row{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr .75fr .75fr .75fr;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);align-items:center}
-.activity-row>div{min-width:0}
-.row-text{font-size:13px;line-height:1.4;text-align:left;text-wrap:wrap;overflow:hidden;text-overflow:ellipsis;min-width:0; color: #535863}
-.activity-action-box{background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.25);color:#ff8080;padding:6px 10px;border-radius:8px;text-align:center;font-size:12px;font-weight:600;width:fit-content}
-.activity-pagination{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px;padding:16px 0}
-.activity-page-button{padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-size:13px;transition:.2s ease;color:#535863}
-.activity-page-button:hover{background:#f7f7f7}
-.activity-page-button.disabled{opacity:.4;pointer-events:none}
-.activity-page-text{font-size:13px;opacity:.7;color:#535863}
-.specs-dynamic-container input,.parts-dynamic-container input{box-sizing:border-box}
-.second-hand-row{display:grid;grid-template-columns:.75fr 2fr .25fr 2fr 1fr .75fr 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);align-items:center;text-align:left;color:#fff}
-.second-hand-cell{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.second-hand-actions{display:flex;gap:8px}
-.second-hand-btn{padding:6px 10px;border-radius:8px;font-size:12px;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#fff}
-.second-hand-btn.delete{background:rgba(255,0,0,.12);border-color:rgba(255,0,0,.25);color:#fff}
-.mte-config-checkbox-row{display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer;color:#535863;font-size:13px}
-</style>
-
-
 <script>
 const DB_TOOLS={
   'activity-logs':'.activity-logs-panel',
