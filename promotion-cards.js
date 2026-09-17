@@ -822,6 +822,7 @@ const { $, $$ } = window.MTW;
         e.stopPropagation();
 
         openEdit(c);
+        enableEditPanelScroll();
       };
 
     wrap.appendChild(overlay);
@@ -3571,6 +3572,30 @@ visibility:hidden!important
         }
       );
     }
+
+    function enableEditPanelScroll() {
+      const panel = $('.et-edit-panel');
+  
+      if (!panel || panel.dataset.wheelScroll === 'true') {
+          return;
+      }
+  
+      panel.dataset.wheelScroll = 'true';
+  
+      panel.addEventListener('wheel', function (e) {
+          const maxScroll = panel.scrollHeight - panel.clientHeight;
+  
+          if (maxScroll <= 0) {
+              return;
+          }
+  
+          e.preventDefault();
+          e.stopPropagation();
+  
+          panel.scrollTop += e.deltaY;
+      }, { passive: false });
+  }
+    
 
     if (els.layout) {
 
