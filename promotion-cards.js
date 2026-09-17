@@ -349,6 +349,12 @@ const { $, $$ } = window.MTW;
     els.list =
       $('.et-current-card-wrapper');
 
+    els.cardView =
+      $('.card-view-container');
+
+    els.scrollBtn =
+      $('#card-scroll-btn');
+
     els.left =
       $('.db-left-content');
 
@@ -1205,7 +1211,7 @@ const { $, $$ } = window.MTW;
     }
 
     const row =
-      els.list?.querySelector(
+      els.cardView?.querySelector(
         '[data-card-id="' +
         c.id +
         '"]'
@@ -1378,16 +1384,19 @@ const { $, $$ } = window.MTW;
   }
 
   function scrollCurrentCards(
-    track,
+    container,
     direction
   ) {
 
-    if (!track) return;
+    if (!container) return;
 
     const amount =
-      track.clientWidth;
+      Math.max(
+        1,
+        container.clientWidth - 40
+      );
 
-    track.scrollBy({
+    container.scrollBy({
       left:
         amount * direction,
       behavior:
@@ -1396,122 +1405,87 @@ const { $, $$ } = window.MTW;
   }
 
   function updateCurrentCardButton(
-    track,
+    container,
     button
   ) {
 
-    if (!track || !button) {
+    if (!container || !button) {
       return;
     }
 
     const max =
       Math.max(
         0,
-        track.scrollWidth -
-        track.clientWidth
+        container.scrollWidth -
+        container.clientWidth
       );
 
+    const hasOverflow =
+      max > 2;
+
+    const atEnd =
+      container.scrollLeft >=
+      max - 2;
+
     button.style.display =
-      max > 2
-        ? 'flex'
+      hasOverflow
+        ? ''
         : 'none';
 
     button.disabled =
-      max <= 2 ||
-      track.scrollLeft >=
-        max - 2;
+      !hasOverflow ||
+      atEnd;
   }
 
   function renderList() {
 
-    if (!els.list) return;
+    if (!els.cardView) return;
 
-    els.list.innerHTML = '';
-
-    const track =
-      document.createElement(
-        'div'
-      );
-
-    track.className =
-      'et-current-card-track';
+    els.cardView.innerHTML = '';
 
     state.cards.forEach(
       c => {
-        track.appendChild(
+        els.cardView.appendChild(
           row(c)
         );
       }
     );
 
-    const next =
-      document.createElement(
-        'button'
-      );
+    if (els.scrollBtn) {
 
-    next.type =
-      'button';
+      els.scrollBtn.onclick =
+        e => {
 
-    next.className =
-      'et-current-card-next';
+          e.preventDefault();
+          e.stopPropagation();
 
-    next.setAttribute(
-      'btn',
-      'next-card'
-    );
+          scrollCurrentCards(
+            els.cardView,
+            1
+          );
+        };
+    }
 
-    next.setAttribute(
-      'aria-label',
-      'Next cards'
-    );
-
-    next.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none">
-        <path
-          d="M9 18l6-6-6-6"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    `;
-
-    next.addEventListener(
-      'click',
-      e => {
-
-        e.stopPropagation();
-
-        scrollCurrentCards(
-          track,
-          1
-        );
-      }
-    );
-
-    track.addEventListener(
-      'scroll',
+    els.cardView.onscroll =
       () => {
-        updateCurrentCardButton(
-          track,
-          next
-        );
-      },
-      { passive: true }
-    );
 
-    els.list.append(
-      track,
-      next
-    );
+        updateCurrentCardButton(
+          els.cardView,
+          els.scrollBtn
+        );
+      };
 
     requestAnimationFrame(
       () => {
 
-        updateCurrentCardButton(
-          track,
-          next
+        requestAnimationFrame(
+          () => {
+
+            updateCurrentCardButton(
+              els.cardView,
+              els.scrollBtn
+            );
+          }
         );
       }
     );
@@ -3272,75 +3246,31 @@ color:#fff
 filter:blur(2px) grayscale(90%)
 }
 
-.et-current-card-wrapper{
-width:100%!important;
-max-width:100%!important;
+.card-view-container{
 min-width:0!important;
-box-sizing:border-box!important;
-display:flex!important;
-flex-direction:row!important;
-align-items:stretch!important;
-overflow:hidden!important;
-position:relative!important
-}
-
-.et-current-card-track{
-flex:1 1 0!important;
-width:0!important;
-max-width:100%!important;
-min-width:0!important;
-box-sizing:border-box!important;
-display:flex!important;
-flex-direction:row!important;
-flex-wrap:nowrap!important;
-align-items:stretch!important;
-gap:10px!important;
 overflow-x:auto!important;
 overflow-y:hidden!important;
+flex:1 1 auto!important;
 scrollbar-width:none!important;
 -ms-overflow-style:none!important;
 overscroll-behavior-x:contain!important;
 scroll-behavior:smooth!important
 }
 
-.et-current-card-track::-webkit-scrollbar{
+.card-view-container::-webkit-scrollbar{
 display:none!important;
 width:0!important;
 height:0!important
 }
 
-.et-current-card-track > .et-current-card{
+.card-view-container > .et-current-card{
 flex:0 0 auto!important;
 min-width:0!important
 }
 
-.et-current-card-next{
-flex:0 0 42px!important;
-width:42px!important;
-min-width:42px!important;
-height:auto!important;
-margin-left:10px!important;
-padding:0!important;
-border:0!important;
-border-radius:6px!important;
-background:#111!important;
-color:#fff!important;
-display:flex!important;
-align-items:center!important;
-justify-content:center!important;
-cursor:pointer!important;
-box-sizing:border-box!important
-}
-
-.et-current-card-next svg{
-width:20px!important;
-height:20px!important;
-pointer-events:none!important
-}
-
-.et-current-card-next:disabled{
-opacity:.35!important;
-cursor:default!important
+#card-scroll-btn:disabled{
+opacity:.35;
+cursor:default
 }
 
 .db-left-content.editing{
@@ -3849,19 +3779,9 @@ visibility:hidden!important
 
             fitAll();
 
-            const track =
-              els.list?.querySelector(
-                '.et-current-card-track'
-              );
-
-            const button =
-              els.list?.querySelector(
-                '.et-current-card-next'
-              );
-
             updateCurrentCardButton(
-              track,
-              button
+              els.cardView,
+              els.scrollBtn
             );
           }
         );
