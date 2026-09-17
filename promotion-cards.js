@@ -3155,33 +3155,34 @@ filter:blur(2px) grayscale(90%)
 
 .db-left-content.editing{
     width:100%;
-    height:100%;
+    height:100vh;
     min-height:0;
     overflow:hidden;
 }
 
 .et-edit-panel{
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    padding-right: 10px;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+    height:100%;
+    max-height:100%;
+    min-height:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    box-sizing:border-box;
+    padding-right:10px;
+    overscroll-behavior:contain;
+    scrollbar-width:thin;
 }
 
 .et-edit-panel::-webkit-scrollbar{
-    width: 6px;
+    width:6px;
 }
 
 .et-edit-panel::-webkit-scrollbar-track{
-    background: transparent;
+    background:transparent;
 }
 
 .et-edit-panel::-webkit-scrollbar-thumb{
-    background: #ccc;
-    border-radius: 10px;
+    background:#ccc;
+    border-radius:10px;
 }
 
 .et-edit-panel-header{
