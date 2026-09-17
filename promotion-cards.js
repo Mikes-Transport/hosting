@@ -822,7 +822,6 @@ const { $, $$ } = window.MTW;
         e.stopPropagation();
 
         openEdit(c);
-        enableEditPanelScroll();
       };
 
     wrap.appendChild(overlay);
@@ -1552,13 +1551,7 @@ const { $, $$ } = window.MTW;
 
     requestAnimationFrame(
       () => {
-
         panel.scrollTop = 0;
-
-        panel.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
       }
     );
   }
@@ -3154,41 +3147,59 @@ color:#fff
 filter:blur(2px) grayscale(90%)
 }
 
+/* EDIT PANEL SCROLL CONTAINER */
+
 .db-left-content.editing{
-    width:100%;
-    min-height:0;
-    overflow:hidden;
+width:100%!important;
+height:calc(100vh - 120px)!important;
+min-height:0!important;
+max-height:calc(100vh - 120px)!important;
+overflow:hidden!important;
+display:flex!important;
+flex-direction:column!important;
+overscroll-behavior:contain!important;
+overscroll-behavior-y:contain!important;
 }
 
-.et-edit-panel{
-    width:100%;
-    height:calc(100vh - 120px);
-    max-height:calc(100vh - 120px);
-    overflow-y:auto;
-    overflow-x:hidden;
-    box-sizing:border-box;
-    padding-right:10px;
-    overscroll-behavior:contain;
-    scrollbar-width:thin;
+.db-left-content.editing .et-edit-panel{
+flex:1 1 auto!important;
+width:100%!important;
+height:auto!important;
+min-height:0!important;
+max-height:none!important;
+overflow-y:auto!important;
+overflow-x:hidden!important;
+box-sizing:border-box!important;
+padding-right:10px!important;
+overscroll-behavior:contain!important;
+overscroll-behavior-y:contain!important;
+-webkit-overflow-scrolling:touch!important;
+scrollbar-width:thin;
+touch-action:pan-y;
 }
 
 .et-edit-panel::-webkit-scrollbar{
-    width:6px;
+width:6px;
 }
 
 .et-edit-panel::-webkit-scrollbar-track{
-    background:transparent;
+background:transparent;
 }
 
 .et-edit-panel::-webkit-scrollbar-thumb{
-    background:#ccc;
-    border-radius:10px;
+background:#ccc;
+border-radius:10px;
+}
+
+.et-edit-panel::-webkit-scrollbar-thumb:hover{
+background:#aaa;
 }
 
 .et-edit-panel-header{
 display:flex;
 justify-content:space-between;
 align-items:center;
+flex:0 0 auto;
 margin-bottom:16px;
 padding-bottom:12px;
 border-bottom:1px solid #eee
@@ -3572,30 +3583,6 @@ visibility:hidden!important
         }
       );
     }
-
-    function enableEditPanelScroll() {
-      const panel = $('.et-edit-panel');
-  
-      if (!panel || panel.dataset.wheelScroll === 'true') {
-          return;
-      }
-  
-      panel.dataset.wheelScroll = 'true';
-  
-      panel.addEventListener('wheel', function (e) {
-          const maxScroll = panel.scrollHeight - panel.clientHeight;
-  
-          if (maxScroll <= 0) {
-              return;
-          }
-  
-          e.preventDefault();
-          e.stopPropagation();
-  
-          panel.scrollTop += e.deltaY;
-      }, { passive: false });
-  }
-    
 
     if (els.layout) {
 
