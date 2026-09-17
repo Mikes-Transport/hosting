@@ -3159,32 +3159,27 @@ min-height:0
 }
 
 .et-edit-panel{
-height:calc(100vh - 40px);
-max-height:calc(100vh - 40px);
-overflow-y:auto;
-overflow-x:hidden;
-padding-right:10px;
-box-sizing:border-box;
-overscroll-behavior:contain;
-scrollbar-width:thin;
-scrollbar-color:#ccc transparent;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-right: 10px;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
 }
 
 .et-edit-panel::-webkit-scrollbar{
-width:6px;
+    width: 6px;
 }
 
 .et-edit-panel::-webkit-scrollbar-track{
-background:transparent;
+    background: transparent;
 }
 
 .et-edit-panel::-webkit-scrollbar-thumb{
-background:#ccc;
-border-radius:10px;
-}
-
-.et-edit-panel::-webkit-scrollbar-thumb:hover{
-background:#aaa;
+    background: #ccc;
+    border-radius: 10px;
 }
 
 .et-edit-panel-header{
