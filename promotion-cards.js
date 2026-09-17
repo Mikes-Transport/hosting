@@ -2319,13 +2319,26 @@ filter:blur(2px) grayscale(90%)
 }
 
 .et-edit-panel{
-width:100%;
-box-sizing:border-box;
-background:#fff;
-border:0;
-border-radius:0;
-box-shadow:none;
-padding:0
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+.et-edit-panel::-webkit-scrollbar{
+    width: 6px;
+}
+
+.et-edit-panel::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.et-edit-panel::-webkit-scrollbar-thumb{
+    background: #ccc;
+    border-radius: 10px;
 }
 
 .et-edit-panel-header{
