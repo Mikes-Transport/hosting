@@ -128,6 +128,7 @@ const { $, $$ } = window.MTW;
   const els = {};
   let id = 0;
   let editing = null;
+  let initialized = false;
 
   function clone(x) {
     return JSON.parse(JSON.stringify(x));
@@ -185,13 +186,20 @@ const { $, $$ } = window.MTW;
     let items = [];
 
     if (Array.isArray(x.items) && x.items.length) {
+
       items = x.items.map(item => {
 
-        const fallback = defaultText(item.text ?? '');
+        const fallback = defaultText(
+          item.text ?? ''
+        );
 
         let texts;
 
-        if (Array.isArray(item.texts) && item.texts.length) {
+        if (
+          Array.isArray(item.texts) &&
+          item.texts.length
+        ) {
+
           texts = item.texts.map(t => ({
             text: t.text ?? '',
             fields: Object.assign(
@@ -199,14 +207,18 @@ const { $, $$ } = window.MTW;
               t.fields || {}
             )
           }));
+
         } else {
-          texts = [{
-            text: item.text ?? text,
-            fields: Object.assign(
-              clone(fallback.fields),
-              item.fields || {}
-            )
-          }];
+
+          texts = [
+            {
+              text: item.text ?? text,
+              fields: Object.assign(
+                clone(fallback.fields),
+                item.fields || {}
+              )
+            }
+          ];
         }
 
         return {
@@ -218,7 +230,9 @@ const { $, $$ } = window.MTW;
           texts
         };
       });
+
     } else {
+
       items = d.items;
     }
 
@@ -240,13 +254,22 @@ const { $, $$ } = window.MTW;
   function cardData(x = {}) {
 
     const c = Object.assign({
+
       id: 'card-' + (++id),
+
       title: 'PRODUCT TITLE',
-      description: 'Product description goes here. Maximum of 2 lines.',
+
+      description:
+        'Product description goes here. Maximum of 2 lines.',
+
       price: '999.99',
+
       oldPrice: '999.99',
+
       partNumber: '#00000',
+
       extraNote: 'EXCLUSIVE OF GST'
+
     }, x);
 
     c.style = c.style || {};
@@ -256,25 +279,29 @@ const { $, $$ } = window.MTW;
       c.style.fields || {}
     );
 
-    c.style.description = normalizeContent(
-      c.style.description,
-      c.description
-    );
+    c.style.description =
+      normalizeContent(
+        c.style.description,
+        c.description
+      );
 
-    c.style.partNumber = normalizeContent(
-      c.style.partNumber,
-      c.partNumber
-    );
+    c.style.partNumber =
+      normalizeContent(
+        c.style.partNumber,
+        c.partNumber
+      );
 
-    c.style.extraNote = normalizeContent(
-      c.style.extraNote,
-      c.extraNote
-    );
+    c.style.extraNote =
+      normalizeContent(
+        c.style.extraNote,
+        c.extraNote
+      );
 
-    c.style.oldPrice = normalizeContent(
-      c.style.oldPrice,
-      c.oldPrice
-    );
+    c.style.oldPrice =
+      normalizeContent(
+        c.style.oldPrice,
+        c.oldPrice
+      );
 
     return c;
   }
@@ -284,14 +311,22 @@ const { $, $$ } = window.MTW;
   }
 
   function add(x) {
+
     const c = cardData(x);
+
     state.cards.push(c);
+
     render();
+
     return c;
   }
 
   function del(i) {
-    state.cards = state.cards.filter(c => c.id !== i);
+
+    state.cards =
+      state.cards.filter(
+        c => c.id !== i
+      );
 
     if (editing === i) {
       hideEdit();
@@ -301,18 +336,37 @@ const { $, $$ } = window.MTW;
   }
 
   function cache() {
-    els.header = $('.et-header-wrapper');
-    els.type = $('.et-tool-type-selector');
-    els.layout = $('.et-card-type-selector');
-    els.list = $('.et-current-card-wrapper');
-    els.left = $('.db-left-content');
-    els.menu = $('.db-menu-list');
-    els.add = $('.et-add-card-wrapper [btn="add"]');
-    els.print = $('.et-print-card-wrapper [btn="print"]');
-    els.pages = $('.et-card-body-wrapper');
+
+    els.header =
+      $('.et-header-wrapper');
+
+    els.type =
+      $('.et-tool-type-selector');
+
+    els.layout =
+      $('.et-card-type-selector');
+
+    els.list =
+      $('.et-current-card-wrapper');
+
+    els.left =
+      $('.db-left-content');
+
+    els.menu =
+      $('.db-menu-list');
+
+    els.add =
+      $('.et-add-card-wrapper [btn="add"]');
+
+    els.print =
+      $('.et-print-card-wrapper [btn="print"]');
+
+    els.pages =
+      $('.et-card-body-wrapper');
   }
 
   function flexJ(v) {
+
     return {
       start: 'flex-start',
       center: 'center',
@@ -324,6 +378,7 @@ const { $, $$ } = window.MTW;
   }
 
   function flexA(v) {
+
     return {
       start: 'flex-start',
       center: 'center',
@@ -334,13 +389,24 @@ const { $, $$ } = window.MTW;
 
   function fieldStyle(el, c, key) {
 
-    const f = ((c.style || {}).fields || DEFAULT_FIELDS)[key] ||
+    const f =
+      ((c.style || {}).fields ||
+        DEFAULT_FIELDS)[key] ||
       DEFAULT_FIELDS[key];
 
-    el.style.display = f.v ? '' : 'none';
-    el.style.textAlign = f.a || '';
-    el.style.fontSize = f.size ? f.size + 'px' : '';
-    el.style.lineHeight = f.line || '';
+    el.style.display =
+      f.v ? '' : 'none';
+
+    el.style.textAlign =
+      f.a || '';
+
+    el.style.fontSize =
+      f.size
+        ? f.size + 'px'
+        : '';
+
+    el.style.lineHeight =
+      f.line || '';
   }
 
   function applyContentStyle(el, c, key) {
@@ -349,16 +415,26 @@ const { $, $$ } = window.MTW;
 
     if (!el || !s) return;
 
-    el.style.display = s.display || 'block';
+    el.style.display =
+      s.display || 'block';
 
     if (s.display === 'flex') {
-      el.style.flexDirection = s.direction || 'column';
-      el.style.justifyContent = flexJ(s.justify || 'start');
-      el.style.alignItems = flexA(s.align || 'stretch');
-      el.style.flexWrap = s.wrap || 'nowrap';
+
+      el.style.flexDirection =
+        s.direction || 'column';
+
+      el.style.justifyContent =
+        flexJ(s.justify || 'start');
+
+      el.style.alignItems =
+        flexA(s.align || 'stretch');
+
+      el.style.flexWrap =
+        s.wrap || 'nowrap';
     }
 
     if (s.display === 'grid') {
+
       el.style.gridTemplateColumns =
         'repeat(' +
         (s.columns || 1) +
@@ -370,127 +446,219 @@ const { $, $$ } = window.MTW;
         ',minmax(0,auto))';
     }
 
-    el.style.gap = (s.gap ?? 0) + 'px';
-    el.style.rowGap = (s.rowGap ?? 0) + 'px';
-    el.style.columnGap = (s.columnGap ?? 0) + 'px';
+    el.style.gap =
+      (s.gap ?? 0) + 'px';
+
+    el.style.rowGap =
+      (s.rowGap ?? 0) + 'px';
+
+    el.style.columnGap =
+      (s.columnGap ?? 0) + 'px';
   }
 
   function getItemTexts(item) {
 
-    if (Array.isArray(item.texts) && item.texts.length) {
+    if (
+      Array.isArray(item.texts) &&
+      item.texts.length
+    ) {
       return item.texts;
     }
 
-    return [{
-      text: item.text ?? '',
-      fields: Object.assign(
-        {
-          v: 1,
-          a: 'left',
-          fit: 1,
-          size: null,
-          line: null
-        },
-        item.fields || {}
-      )
-    }];
+    return [
+      {
+        text: item.text ?? '',
+        fields: Object.assign(
+          {
+            v: 1,
+            a: 'left',
+            fit: 1,
+            size: null,
+            line: null
+          },
+          item.fields || {}
+        )
+      }
+    ];
   }
 
   function buildContent(c, key, className) {
 
     const s = c.style[key];
 
-    const wrap = document.createElement('div');
+    const wrap =
+      document.createElement('div');
 
     wrap.className = className;
+
     wrap.dataset.content = key;
 
-    applyContentStyle(wrap, c, key);
+    applyContentStyle(
+      wrap,
+      c,
+      key
+    );
 
-    s.items.forEach((item, index) => {
+    s.items.forEach(
+      (item, index) => {
 
-      const cell = document.createElement('div');
+        const cell =
+          document.createElement('div');
 
-      cell.className = 'card-config-item';
-      cell.dataset.contentItem = index;
+        cell.className =
+          'card-config-item';
 
-      if (s.display === 'grid' || s.display === 'flex') {
-        cell.style.display = 'flex';
-        cell.style.flexDirection = 'column';
-        cell.style.minWidth = '0';
+        cell.dataset.contentItem =
+          index;
+
+        if (
+          s.display === 'grid' ||
+          s.display === 'flex'
+        ) {
+
+          cell.style.display =
+            'flex';
+
+          cell.style.flexDirection =
+            'column';
+
+          cell.style.minWidth =
+            '0';
+        }
+
+        getItemTexts(item).forEach(
+          (txt, textIndex) => {
+
+            const text =
+              document.createElement('div');
+
+            text.className =
+              'card-config-text';
+
+            text.dataset.contentText =
+              textIndex;
+
+            text.textContent =
+              txt.text || '';
+
+            text.style.whiteSpace =
+              'pre-line';
+
+            const f =
+              txt.fields || {
+                v: 1,
+                a: 'left',
+                fit: 1,
+                size: null,
+                line: null
+              };
+
+            text.style.display =
+              f.v ? '' : 'none';
+
+            text.style.textAlign =
+              f.a || 'left';
+
+            text.style.fontSize =
+              f.size
+                ? f.size + 'px'
+                : '';
+
+            text.style.lineHeight =
+              f.line || '';
+
+            cell.appendChild(text);
+          }
+        );
+
+        wrap.appendChild(cell);
       }
-
-      getItemTexts(item).forEach((txt, textIndex) => {
-
-        const text = document.createElement('div');
-
-        text.className = 'card-config-text';
-        text.dataset.contentText = textIndex;
-        text.textContent = txt.text || '';
-        text.style.whiteSpace = 'pre-line';
-
-        const f = txt.fields || {
-          v: 1,
-          a: 'left',
-          fit: 1,
-          size: null,
-          line: null
-        };
-
-        text.style.display = f.v ? '' : 'none';
-        text.style.textAlign = f.a || 'left';
-        text.style.fontSize = f.size ? f.size + 'px' : '';
-        text.style.lineHeight = f.line || '';
-
-        cell.appendChild(text);
-      });
-
-      wrap.appendChild(cell);
-    });
+    );
 
     return wrap;
   }
 
   function build(c) {
 
-    const t = T[state.type];
-    const size = TEXT_CLASS[state.layout];
+    const t =
+      T[state.type];
 
-    const wrap = document.createElement('div');
-    wrap.className = t.card;
-    wrap.dataset.cardId = c.id;
+    const size =
+      TEXT_CLASS[state.layout];
 
-    const cut = document.createElement('div');
-    cut.className = t.cut;
+    const wrap =
+      document.createElement('div');
 
-    const inner = document.createElement('div');
-    inner.className = t.inner;
+    wrap.className =
+      t.card;
 
-    const titleWrap = document.createElement('div');
-    titleWrap.className = t.title;
+    wrap.dataset.cardId =
+      c.id;
 
-    const h2 = document.createElement('h2');
-    h2.className = t.h2;
-    h2.textContent = HEAD[state.type];
+    const cut =
+      document.createElement('div');
+
+    cut.className =
+      t.cut;
+
+    const inner =
+      document.createElement('div');
+
+    inner.className =
+      t.inner;
+
+    const titleWrap =
+      document.createElement('div');
+
+    titleWrap.className =
+      t.title;
+
+    const h2 =
+      document.createElement('h2');
+
+    h2.className =
+      t.h2;
+
+    h2.textContent =
+      HEAD[state.type];
 
     titleWrap.appendChild(h2);
 
-    const bw = document.createElement('div');
-    bw.className = t.bodyWrap;
+    const bw =
+      document.createElement('div');
 
-    const body = document.createElement('div');
-    body.className = t.body;
+    bw.className =
+      t.bodyWrap;
 
-    const top = document.createElement('div');
-    top.className = 'card-top-wrapper';
+    const body =
+      document.createElement('div');
 
-    const title = document.createElement('div');
-    title.className = 'card-grid-title';
-    title.dataset.field = 'title';
+    body.className =
+      t.body;
 
-    const titleText = document.createElement('div');
-    titleText.className = 'card-text-title';
-    titleText.textContent = c.title;
+    const top =
+      document.createElement('div');
+
+    top.className =
+      'card-top-wrapper';
+
+    const title =
+      document.createElement('div');
+
+    title.className =
+      'card-grid-title';
+
+    title.dataset.field =
+      'title';
+
+    const titleText =
+      document.createElement('div');
+
+    titleText.className =
+      'card-text-title';
+
+    titleText.textContent =
+      c.title;
 
     if (size) {
       titleText.classList.add(size);
@@ -498,22 +666,35 @@ const { $, $$ } = window.MTW;
 
     title.appendChild(titleText);
 
-    const desc = buildContent(
-      c,
-      'description',
-      'card-grid-description'
+    const desc =
+      buildContent(
+        c,
+        'description',
+        'card-grid-description'
+      );
+
+    desc.dataset.field =
+      'description';
+
+    top.append(
+      title,
+      desc
     );
 
-    desc.dataset.field = 'description';
+    const bottom =
+      document.createElement('div');
 
-    top.append(title, desc);
+    bottom.className =
+      'card-bottom-wrapper';
 
-    const bottom = document.createElement('div');
-    bottom.className = 'card-bottom-wrapper';
+    const price =
+      document.createElement('div');
 
-    const price = document.createElement('div');
-    price.className = 'card-text-price';
-    price.dataset.field = 'price';
+    price.className =
+      'card-text-price';
+
+    price.dataset.field =
+      'price';
 
     if (size) {
       price.classList.add(size);
@@ -523,57 +704,96 @@ const { $, $$ } = window.MTW;
       price.classList.add(t.price);
     }
 
-    price.textContent = '$' + c.price;
+    price.textContent =
+      '$' + c.price;
 
-    const extraGrid = document.createElement('div');
-    extraGrid.className = 'card-extra-info-grid';
+    const extraGrid =
+      document.createElement('div');
 
-    const leftGroup = document.createElement('div');
-    leftGroup.className = 'card-extra-info';
+    extraGrid.className =
+      'card-extra-info-grid';
 
-    const part = buildContent(
-      c,
-      'partNumber',
-      'card-grid-part-number'
+    const leftGroup =
+      document.createElement('div');
+
+    leftGroup.className =
+      'card-extra-info';
+
+    const part =
+      buildContent(
+        c,
+        'partNumber',
+        'card-grid-part-number'
+      );
+
+    part.dataset.field =
+      'partNumber';
+
+    const note =
+      buildContent(
+        c,
+        'extraNote',
+        'card-grid-extra-note'
+      );
+
+    note.dataset.field =
+      'extraNote';
+
+    leftGroup.append(
+      part,
+      note
     );
 
-    part.dataset.field = 'partNumber';
+    const oldWrap =
+      document.createElement('div');
 
-    const note = buildContent(
-      c,
-      'extraNote',
-      'card-grid-extra-note'
-    );
+    oldWrap.className =
+      'card-old-price-wrapper';
 
-    note.dataset.field = 'extraNote';
+    const old =
+      buildContent(
+        c,
+        'oldPrice',
+        'card-grid-old-price'
+      );
 
-    leftGroup.append(part, note);
-
-    const oldWrap = document.createElement('div');
-    oldWrap.className = 'card-old-price-wrapper';
-
-    const old = buildContent(
-      c,
-      'oldPrice',
-      'card-grid-old-price'
-    );
-
-    old.dataset.field = 'oldPrice';
+    old.dataset.field =
+      'oldPrice';
 
     oldWrap.appendChild(old);
 
-    extraGrid.append(leftGroup, oldWrap);
+    extraGrid.append(
+      leftGroup,
+      oldWrap
+    );
 
-    bottom.append(price, extraGrid);
+    bottom.append(
+      price,
+      extraGrid
+    );
 
-    body.append(top, bottom);
+    body.append(
+      top,
+      bottom
+    );
+
     bw.appendChild(body);
-    inner.append(titleWrap, bw);
-    wrap.append(cut, inner);
 
-    const overlay = document.createElement('div');
+    inner.append(
+      titleWrap,
+      bw
+    );
 
-    overlay.className = 'et-card-overlay';
+    wrap.append(
+      cut,
+      inner
+    );
+
+    const overlay =
+      document.createElement('div');
+
+    overlay.className =
+      'et-card-overlay';
 
     overlay.innerHTML = `
       <div class="et-card-overlay-icon">
@@ -596,25 +816,42 @@ const { $, $$ } = window.MTW;
       </div>
     `;
 
-    overlay.onclick = e => {
-      e.stopPropagation();
-      openEdit(c);
-    };
+    overlay.onclick =
+      e => {
+
+        e.stopPropagation();
+
+        openEdit(c);
+      };
 
     wrap.appendChild(overlay);
 
-    applyElementSettings(wrap, c);
+    applyElementSettings(
+      wrap,
+      c
+    );
 
     return wrap;
   }
 
   function applyElementSettings(el, c) {
 
-    const title = el.querySelector('.card-grid-title');
-    const titleText = title?.querySelector('.card-text-title');
+    const title =
+      el.querySelector(
+        '.card-grid-title'
+      );
+
+    const titleText =
+      title?.querySelector(
+        '.card-text-title'
+      );
 
     if (titleText) {
-      fieldStyle(titleText, c, 'title');
+      fieldStyle(
+        titleText,
+        c,
+        'title'
+      );
     }
 
     [
@@ -624,44 +861,81 @@ const { $, $$ } = window.MTW;
       'oldPrice'
     ].forEach(key => {
 
-      const target = el.querySelector(
-        '[data-field="' + key + '"]'
-      );
+      const target =
+        el.querySelector(
+          '[data-field="' +
+          key +
+          '"]'
+        );
 
       if (!target) return;
 
-      applyContentStyle(target, c, key);
+      applyContentStyle(
+        target,
+        c,
+        key
+      );
 
       target
-        .querySelectorAll('.card-config-item')
-        .forEach((cell, index) => {
+        .querySelectorAll(
+          '.card-config-item'
+        )
+        .forEach(
+          (cell, index) => {
 
-          const item = c.style[key].items[index];
+            const item =
+              c.style[key]
+                .items[index];
 
-          if (!item) return;
+            if (!item) return;
 
-          getItemTexts(item).forEach((txt, textIndex) => {
+            getItemTexts(item)
+              .forEach(
+                (txt, textIndex) => {
 
-            const x = cell.querySelectorAll(
-              '.card-config-text'
-            )[textIndex];
+                  const x =
+                    cell
+                      .querySelectorAll(
+                        '.card-config-text'
+                      )[textIndex];
 
-            if (!x) return;
+                  if (!x) return;
 
-            const f = txt.fields || {};
+                  const f =
+                    txt.fields || {};
 
-            x.style.display = f.v ? '' : 'none';
-            x.style.textAlign = f.a || 'left';
-            x.style.fontSize = f.size ? f.size + 'px' : '';
-            x.style.lineHeight = f.line || '';
-          });
-        });
+                  x.style.display =
+                    f.v
+                      ? ''
+                      : 'none';
+
+                  x.style.textAlign =
+                    f.a || 'left';
+
+                  x.style.fontSize =
+                    f.size
+                      ? f.size + 'px'
+                      : '';
+
+                  x.style.lineHeight =
+                    f.line || '';
+                }
+              );
+          }
+        );
     });
 
-    const price = el.querySelector('[data-field="price"]');
+    const price =
+      el.querySelector(
+        '[data-field="price"]'
+      );
 
     if (price) {
-      fieldStyle(price, c, 'price');
+      fieldStyle(
+        price,
+        c,
+        'price'
+      );
     }
   }
 
@@ -690,7 +964,10 @@ const { $, $$ } = window.MTW;
       )
       .forEach(el => {
 
-        const top = el.querySelector('.card-top-wrapper');
+        const top =
+          el.querySelector(
+            '.card-top-wrapper'
+          );
 
         if (!top) return;
 
@@ -707,59 +984,85 @@ const { $, $$ } = window.MTW;
 
         keys.forEach(x => {
 
-          const e = el.querySelector(
-            '[data-field="' + x[0] + '"]'
-          );
+          const e =
+            el.querySelector(
+              '[data-field="' +
+              x[0] +
+              '"]'
+            );
 
-          base[x[0]] = e
-            ? parseFloat(getComputedStyle(e).fontSize) || 0
-            : 0;
+          base[x[0]] =
+            e
+              ? parseFloat(
+                  getComputedStyle(e)
+                    .fontSize
+                ) || 0
+              : 0;
         });
 
         let n = 0;
 
         while (
           n < 80 &&
-          top.scrollHeight > top.clientHeight + 1
+          top.scrollHeight >
+            top.clientHeight + 1
         ) {
 
-          let changed = false;
+          let changed =
+            false;
 
-          keys.forEach(([k, min, ratio]) => {
+          keys.forEach(
+            ([k, min, ratio]) => {
 
-            const e = el.querySelector(
-              '[data-field="' + k + '"]'
-            );
+              const e =
+                el.querySelector(
+                  '[data-field="' +
+                  k +
+                  '"]'
+                );
 
-            if (!e) return;
+              if (!e) return;
 
-            const cur =
-              parseFloat(getComputedStyle(e).fontSize) || 0;
+              const cur =
+                parseFloat(
+                  getComputedStyle(e)
+                    .fontSize
+                ) || 0;
 
-            const floor = base[k] * min;
+              const floor =
+                base[k] * min;
 
-            if (cur > floor) {
+              if (cur > floor) {
 
-              const next = Math.max(
-                cur * ratio,
-                floor
-              );
+                const next =
+                  Math.max(
+                    cur * ratio,
+                    floor
+                  );
 
-              e
-                .querySelectorAll('.card-config-text')
-                .forEach(x => {
-                  x.style.fontSize = next + 'px';
-                });
+                e
+                  .querySelectorAll(
+                    '.card-config-text'
+                  )
+                  .forEach(x => {
+                    x.style.fontSize =
+                      next + 'px';
+                  });
 
-              if (k === 'title' || k === 'price') {
-                e.style.fontSize = next + 'px';
-              }
+                if (
+                  k === 'title' ||
+                  k === 'price'
+                ) {
+                  e.style.fontSize =
+                    next + 'px';
+                }
 
-              if (next < cur) {
-                changed = true;
+                if (next < cur) {
+                  changed = true;
+                }
               }
             }
-          });
+          );
 
           if (!changed) break;
 
@@ -770,24 +1073,39 @@ const { $, $$ } = window.MTW;
 
   function live(c, key) {
 
-    const el = document.querySelector(
-      '[data-card-id="' + c.id + '"].et-everyday-card,' +
-      '[data-card-id="' + c.id + '"].et-clearance-card,' +
-      '[data-card-id="' + c.id + '"].et-promo-card'
-    );
+    const el =
+      document.querySelector(
+        '[data-card-id="' +
+        c.id +
+        '"].et-everyday-card,' +
+        '[data-card-id="' +
+        c.id +
+        '"].et-clearance-card,' +
+        '[data-card-id="' +
+        c.id +
+        '"].et-promo-card'
+      );
 
     if (el) {
 
-      const target = el.querySelector(
-        '[data-field="' + key + '"]'
-      );
+      const target =
+        el.querySelector(
+          '[data-field="' +
+          key +
+          '"]'
+        );
 
       if (target) {
 
-        if (key === 'title' || key === 'price') {
+        if (
+          key === 'title' ||
+          key === 'price'
+        ) {
 
           const x =
-            target.querySelector('.card-text-title') ||
+            target.querySelector(
+              '.card-text-title'
+            ) ||
             target;
 
           x.textContent =
@@ -797,63 +1115,79 @@ const { $, $$ } = window.MTW;
 
         } else {
 
-          const s = c.style[key];
+          const s =
+            c.style[key];
 
           target.innerHTML = '';
 
-          s.items.forEach(item => {
+          s.items.forEach(
+            item => {
 
-            const cell =
-              document.createElement('div');
+              const cell =
+                document.createElement(
+                  'div'
+                );
 
-            cell.className =
-              'card-config-item';
+              cell.className =
+                'card-config-item';
 
-            if (
-              s.display === 'grid' ||
-              s.display === 'flex'
-            ) {
-              cell.style.display = 'flex';
-              cell.style.flexDirection = 'column';
-              cell.style.minWidth = '0';
+              if (
+                s.display === 'grid' ||
+                s.display === 'flex'
+              ) {
+
+                cell.style.display =
+                  'flex';
+
+                cell.style.flexDirection =
+                  'column';
+
+                cell.style.minWidth =
+                  '0';
+              }
+
+              getItemTexts(item)
+                .forEach(txt => {
+
+                  const text =
+                    document.createElement(
+                      'div'
+                    );
+
+                  text.className =
+                    'card-config-text';
+
+                  text.textContent =
+                    txt.text || '';
+
+                  text.style.whiteSpace =
+                    'pre-line';
+
+                  const f =
+                    txt.fields || {};
+
+                  text.style.display =
+                    f.v
+                      ? ''
+                      : 'none';
+
+                  text.style.textAlign =
+                    f.a || 'left';
+
+                  text.style.fontSize =
+                    f.size
+                      ? f.size + 'px'
+                      : '';
+
+                  text.style.lineHeight =
+                    f.line || '';
+
+                  cell.appendChild(text);
+                });
+
+              target.appendChild(cell);
             }
-
-            getItemTexts(item).forEach(txt => {
-
-              const text =
-                document.createElement('div');
-
-              text.className =
-                'card-config-text';
-
-              text.textContent =
-                txt.text || '';
-
-              text.style.whiteSpace =
-                'pre-line';
-
-              const f =
-                txt.fields || {};
-
-              text.style.display =
-                f.v ? '' : 'none';
-
-              text.style.textAlign =
-                f.a || 'left';
-
-              text.style.fontSize =
-                f.size
-                  ? f.size + 'px'
-                  : '';
-
-              text.style.lineHeight =
-                f.line || '';
-
-              cell.appendChild(text);
-            });
-
-            target.appendChild(cell);
-          });
+          );
 
           applyContentStyle(
             target,
@@ -864,26 +1198,40 @@ const { $, $$ } = window.MTW;
 
         resetFonts(el);
 
-        requestAnimationFrame(fitAll);
+        requestAnimationFrame(
+          fitAll
+        );
       }
     }
 
     const row =
       els.list?.querySelector(
-        '[data-card-id="' + c.id + '"]'
+        '[data-card-id="' +
+        c.id +
+        '"]'
       );
 
     if (row) {
 
       const txt =
-        row.querySelectorAll('.et-small-txt');
+        row.querySelectorAll(
+          '.et-small-txt'
+        );
 
-      if (key === 'title' && txt[0]) {
-        txt[0].textContent = c.title;
+      if (
+        key === 'title' &&
+        txt[0]
+      ) {
+        txt[0].textContent =
+          c.title;
       }
 
-      if (key === 'partNumber' && txt[1]) {
-        txt[1].textContent = c.partNumber;
+      if (
+        key === 'partNumber' &&
+        txt[1]
+      ) {
+        txt[1].textContent =
+          c.partNumber;
       }
     }
   }
@@ -894,70 +1242,137 @@ const { $, $$ } = window.MTW;
 
     if (!c) return;
 
-    const old = document.querySelector(
-      '[data-card-id="' + i + '"].et-everyday-card,' +
-      '[data-card-id="' + i + '"].et-clearance-card,' +
-      '[data-card-id="' + i + '"].et-promo-card'
-    );
+    const old =
+      document.querySelector(
+        '[data-card-id="' +
+        i +
+        '"].et-everyday-card,' +
+        '[data-card-id="' +
+        i +
+        '"].et-clearance-card,' +
+        '[data-card-id="' +
+        i +
+        '"].et-promo-card'
+      );
 
     if (old) {
 
-      const fresh = build(c);
+      const fresh =
+        build(c);
 
       old.replaceWith(fresh);
 
-      requestAnimationFrame(fitAll);
+      requestAnimationFrame(
+        fitAll
+      );
     }
   }
 
   function row(c) {
 
-    const r = document.createElement('div');
+    const r =
+      document.createElement(
+        'div'
+      );
 
-    r.className = 'et-current-card';
-    r.dataset.cardId = c.id;
+    r.className =
+      'et-current-card';
 
-    const title = document.createElement('div');
+    r.dataset.cardId =
+      c.id;
 
-    title.className = 'et-small-txt';
-    title.textContent = c.title;
+    const title =
+      document.createElement(
+        'div'
+      );
 
-    const part = document.createElement('div');
+    title.className =
+      'et-small-txt';
 
-    part.className = 'et-small-txt';
-    part.textContent = c.partNumber;
+    title.textContent =
+      c.title;
 
-    const actions = document.createElement('div');
+    const part =
+      document.createElement(
+        'div'
+      );
+
+    part.className =
+      'et-small-txt';
+
+    part.textContent =
+      c.partNumber;
+
+    const actions =
+      document.createElement(
+        'div'
+      );
 
     actions.className =
       'et-current-card-action-wrapper';
 
-    const edit = document.createElement('div');
+    const edit =
+      document.createElement(
+        'div'
+      );
 
-    edit.className = 'et-action-button';
-    edit.setAttribute('btn', 'edit');
+    edit.className =
+      'et-action-button';
 
-    const et = document.createElement('div');
+    edit.setAttribute(
+      'btn',
+      'edit'
+    );
 
-    et.className = 'et-xsmall-txt';
-    et.textContent = 'Edit';
+    const et =
+      document.createElement(
+        'div'
+      );
+
+    et.className =
+      'et-xsmall-txt';
+
+    et.textContent =
+      'Edit';
 
     edit.appendChild(et);
 
-    const remove = document.createElement('div');
+    const remove =
+      document.createElement(
+        'div'
+      );
 
-    remove.className = 'et-action-button';
-    remove.setAttribute('btn', 'delete');
+    remove.className =
+      'et-action-button';
 
-    const rt = document.createElement('div');
+    remove.setAttribute(
+      'btn',
+      'delete'
+    );
 
-    rt.className = 'et-xsmall-txt';
-    rt.textContent = 'X';
+    const rt =
+      document.createElement(
+        'div'
+      );
+
+    rt.className =
+      'et-xsmall-txt';
+
+    rt.textContent =
+      'X';
 
     remove.appendChild(rt);
 
-    actions.append(edit, remove);
-    r.append(title, part, actions);
+    actions.append(
+      edit,
+      remove
+    );
+
+    r.append(
+      title,
+      part,
+      actions
+    );
 
     return r;
   }
@@ -968,17 +1383,27 @@ const { $, $$ } = window.MTW;
 
     els.list.innerHTML = '';
 
-    state.cards.forEach(c => {
-      els.list.appendChild(row(c));
-    });
+    state.cards.forEach(
+      c => {
+        els.list.appendChild(
+          row(c)
+        );
+      }
+    );
   }
 
   function chunk(a, n) {
 
     const out = [];
 
-    for (let i = 0; i < a.length; i += n) {
-      out.push(a.slice(i, i + n));
+    for (
+      let i = 0;
+      i < a.length;
+      i += n
+    ) {
+      out.push(
+        a.slice(i, i + n)
+      );
     }
 
     return out;
@@ -990,35 +1415,62 @@ const { $, $$ } = window.MTW;
 
     els.pages.innerHTML = '';
 
-    els.pages.style.display = 'flex';
-    els.pages.style.flexDirection = 'column';
-    els.pages.style.justifyContent = 'flex-start';
-    els.pages.style.alignItems = 'center';
+    els.pages.style.display =
+      'flex';
 
-    const pages = state.cards.length
-      ? chunk(state.cards, CAPS[state.layout])
-      : [[]];
+    els.pages.style.flexDirection =
+      'column';
+
+    els.pages.style.justifyContent =
+      'flex-start';
+
+    els.pages.style.alignItems =
+      'center';
+
+    const pages =
+      state.cards.length
+        ? chunk(
+            state.cards,
+            CAPS[state.layout]
+          )
+        : [[]];
 
     pages.forEach(cards => {
 
-      const page = document.createElement('div');
+      const page =
+        document.createElement(
+          'div'
+        );
 
-      page.className = 'et-page';
+      page.className =
+        'et-page';
 
-      page.style.width = '210mm';
-      page.style.height = '297mm';
-      page.style.boxSizing = 'border-box';
-      page.style.overflow = 'hidden';
+      page.style.width =
+        '210mm';
 
-      const grid = document.createElement('div');
+      page.style.height =
+        '297mm';
+
+      page.style.boxSizing =
+        'border-box';
+
+      page.style.overflow =
+        'hidden';
+
+      const grid =
+        document.createElement(
+          'div'
+        );
 
       grid.className =
         'et-grid-cards ' +
         state.layout;
 
-      const g = GRID[state.layout];
+      const g =
+        GRID[state.layout];
 
-      grid.style.display = 'grid';
+      grid.style.display =
+        'grid';
 
       grid.style.gridTemplateColumns =
         'repeat(' +
@@ -1030,52 +1482,84 @@ const { $, $$ } = window.MTW;
         g[1] +
         ',1fr)';
 
-      grid.style.gridAutoFlow = 'row';
-      grid.style.width = '100%';
-      grid.style.height = '100%';
-      grid.style.boxSizing = 'border-box';
+      grid.style.gridAutoFlow =
+        'row';
+
+      grid.style.width =
+        '100%';
+
+      grid.style.height =
+        '100%';
+
+      grid.style.boxSizing =
+        'border-box';
 
       cards.forEach(c => {
-        grid.appendChild(build(c));
+        grid.appendChild(
+          build(c)
+        );
       });
 
       page.appendChild(grid);
+
       els.pages.appendChild(page);
     });
 
     renderList();
 
-    requestAnimationFrame(fitAll);
+    requestAnimationFrame(
+      fitAll
+    );
   }
 
   function openEdit(c) {
 
-    if (!c || !els.left) return;
-
-    const old =
-      els.left.querySelector('.et-edit-panel');
-
-    if (old) old.remove();
-
-    editing = c.id;
-
-    if (els.menu) {
-      els.menu.style.display = 'none';
+    if (
+      !c ||
+      !els.left
+    ) {
+      return;
     }
 
-    els.left.classList.add('editing');
+    const old =
+      els.left.querySelector(
+        '.et-edit-panel'
+      );
 
-    const panel = buildPanel(c);
+    if (old) {
+      old.remove();
+    }
 
-    els.left.appendChild(panel);
+    editing =
+      c.id;
 
-    requestAnimationFrame(() => {
+    if (els.menu) {
+      els.menu.style.display =
+        'none';
+    }
 
-      panel.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    });
+    els.left.classList.add(
+      'editing'
+    );
+
+    const panel =
+      buildPanel(c);
+
+    els.left.appendChild(
+      panel
+    );
+
+    requestAnimationFrame(
+      () => {
+
+        panel.scrollTop = 0;
+
+        panel.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    );
   }
 
   function hideEdit() {
@@ -1085,127 +1569,216 @@ const { $, $$ } = window.MTW;
     if (els.left) {
 
       const panel =
-        els.left.querySelector('.et-edit-panel');
+        els.left.querySelector(
+          '.et-edit-panel'
+        );
 
-      if (panel) panel.remove();
+      if (panel) {
+        panel.remove();
+      }
 
-      els.left.classList.remove('editing');
+      els.left.classList.remove(
+        'editing'
+      );
     }
 
     if (els.menu) {
-      els.menu.style.display = '';
+      els.menu.style.display =
+        '';
     }
   }
 
-  function select(label, value, options, fn) {
+  function select(
+    label,
+    value,
+    options,
+    fn
+  ) {
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    wrap.className = 'et-control-row';
+    wrap.className =
+      'et-control-row';
 
     const l =
-      document.createElement('label');
+      document.createElement(
+        'label'
+      );
 
-    l.className = 'et-control-label';
-    l.textContent = label;
+    l.className =
+      'et-control-label';
+
+    l.textContent =
+      label;
 
     const s =
-      document.createElement('select');
+      document.createElement(
+        'select'
+      );
 
-    s.className = 'et-control';
+    s.className =
+      'et-control';
 
-    options.forEach(([v, t]) => {
+    options.forEach(
+      ([v, t]) => {
 
-      const o =
-        document.createElement('option');
+        const o =
+          document.createElement(
+            'option'
+          );
 
-      o.value = v;
-      o.textContent = t;
-      o.selected =
-        String(v) === String(value);
+        o.value = v;
 
-      s.appendChild(o);
-    });
+        o.textContent = t;
 
-    s.onchange = () => fn(s.value);
+        o.selected =
+          String(v) ===
+          String(value);
 
-    wrap.append(l, s);
+        s.appendChild(o);
+      }
+    );
+
+    s.onchange =
+      () => fn(s.value);
+
+    wrap.append(
+      l,
+      s
+    );
 
     return wrap;
   }
 
-  function num(label, value, fn) {
+  function num(
+    label,
+    value,
+    fn
+  ) {
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    wrap.className = 'et-control-row';
+    wrap.className =
+      'et-control-row';
 
     const l =
-      document.createElement('label');
+      document.createElement(
+        'label'
+      );
 
-    l.className = 'et-control-label';
-    l.textContent = label;
+    l.className =
+      'et-control-label';
+
+    l.textContent =
+      label;
 
     const input =
-      document.createElement('input');
+      document.createElement(
+        'input'
+      );
 
     input.className =
       'et-control et-number';
 
-    input.type = 'number';
-    input.value = value ?? '';
+    input.type =
+      'number';
+
+    input.value =
+      value ?? '';
 
     input.oninput =
       () => fn(input.value);
 
-    wrap.append(l, input);
+    wrap.append(
+      l,
+      input
+    );
 
     return wrap;
   }
 
-  function control(label, value, fn) {
+  function control(
+    label,
+    value,
+    fn
+  ) {
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    wrap.className = 'et-control-row';
+    wrap.className =
+      'et-control-row';
 
     const l =
-      document.createElement('label');
+      document.createElement(
+        'label'
+      );
 
-    l.className = 'et-control-label';
-    l.textContent = label;
+    l.className =
+      'et-control-label';
+
+    l.textContent =
+      label;
 
     const input =
-      document.createElement('input');
+      document.createElement(
+        'input'
+      );
 
-    input.className = 'et-checkbox';
+    input.className =
+      'et-checkbox';
 
-    input.type = 'checkbox';
-    input.checked = !!value;
+    input.type =
+      'checkbox';
+
+    input.checked =
+      !!value;
 
     input.onchange =
-      () => fn(input.checked);
+      () => fn(
+        input.checked
+      );
 
-    wrap.append(l, input);
+    wrap.append(
+      l,
+      input
+    );
 
     return wrap;
   }
 
-  function contentField(c, key, type) {
+  function contentField(
+    c,
+    key,
+    type
+  ) {
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    wrap.className = 'et-field-group';
+    wrap.className =
+      'et-field-group';
 
     const label =
-      document.createElement('label');
+      document.createElement(
+        'label'
+      );
 
-    label.className = 'et-field-label';
-    label.textContent = FIELD_NAMES[key];
+    label.className =
+      'et-field-label';
+
+    label.textContent =
+      FIELD_NAMES[key];
 
     const input =
       document.createElement(
@@ -1220,13 +1793,16 @@ const { $, $$ } = window.MTW;
     input.value =
       c[key] ?? '';
 
-    if (type === 'textarea') {
+    if (
+      type === 'textarea'
+    ) {
       input.rows = 4;
     }
 
     input.oninput = () => {
 
-      c[key] = input.value;
+      c[key] =
+        input.value;
 
       if (
         key === 'description' ||
@@ -1252,8 +1828,11 @@ const { $, $$ } = window.MTW;
               content.items[0].texts
             )
           ) {
+
             content.items[0].texts = [
-              defaultText(input.value)
+              defaultText(
+                input.value
+              )
             ];
           }
 
@@ -1262,15 +1841,26 @@ const { $, $$ } = window.MTW;
         }
       }
 
-      live(c, key, input.value);
+      live(
+        c,
+        key,
+        input.value
+      );
     };
 
-    wrap.append(label, input);
+    wrap.append(
+      label,
+      input
+    );
 
     return wrap;
   }
 
-  function fieldSettings(c, item, onChange) {
+  function fieldSettings(
+    c,
+    item,
+    onChange
+  ) {
 
     item.fields =
       item.fields || {
@@ -1281,10 +1871,13 @@ const { $, $$ } = window.MTW;
         line: null
       };
 
-    const f = item.fields;
+    const f =
+      item.fields;
 
     const box =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     box.className =
       'et-text-settings';
@@ -1319,7 +1912,9 @@ const { $, $$ } = window.MTW;
         f.size,
         v => {
           f.size =
-            v ? Number(v) : null;
+            v
+              ? Number(v)
+              : null;
 
           onChange();
         }
@@ -1329,7 +1924,9 @@ const { $, $$ } = window.MTW;
         'Line Height',
         f.line,
         v => {
-          f.line = v || null;
+          f.line =
+            v || null;
+
           onChange();
         }
       ),
@@ -1347,24 +1944,34 @@ const { $, $$ } = window.MTW;
     return box;
   }
 
-  function contentEditor(c, key) {
+  function contentEditor(
+    c,
+    key
+  ) {
 
-    const s = c.style[key];
+    const s =
+      c.style[key];
 
     const box =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     box.className =
       'et-content-editor';
 
     const head =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     head.className =
       'et-content-editor-header';
 
     const name =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     name.className =
       'et-field-editor-name';
@@ -1373,34 +1980,50 @@ const { $, $$ } = window.MTW;
       FIELD_NAMES[key];
 
     const toggle =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    toggle.type = 'button';
+    toggle.type =
+      'button';
+
     toggle.className =
       'et-field-editor-toggle';
 
-    toggle.textContent = 'Edit';
+    toggle.textContent =
+      'Edit';
 
-    head.append(name, toggle);
+    head.append(
+      name,
+      toggle
+    );
 
     const body =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     body.className =
       'et-content-editor-body';
 
     toggle.onclick = () => {
 
-      box.classList.toggle('open');
+      box.classList.toggle(
+        'open'
+      );
 
       toggle.textContent =
-        box.classList.contains('open')
+        box.classList.contains(
+          'open'
+        )
           ? 'Close'
           : 'Edit';
     };
 
     const settings =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     settings.className =
       'et-content-settings';
@@ -1427,8 +2050,14 @@ const { $, $$ } = window.MTW;
         [
           ['column', 'Column'],
           ['row', 'Row'],
-          ['column-reverse', 'Column Reverse'],
-          ['row-reverse', 'Row Reverse']
+          [
+            'column-reverse',
+            'Column Reverse'
+          ],
+          [
+            'row-reverse',
+            'Row Reverse'
+          ]
         ],
         v => {
           s.direction = v;
@@ -1443,9 +2072,18 @@ const { $, $$ } = window.MTW;
           ['start', 'Start'],
           ['center', 'Center'],
           ['end', 'End'],
-          ['between', 'Space Between'],
-          ['around', 'Space Around'],
-          ['even', 'Space Evenly']
+          [
+            'between',
+            'Space Between'
+          ],
+          [
+            'around',
+            'Space Around'
+          ],
+          [
+            'even',
+            'Space Evenly'
+          ]
         ],
         v => {
           s.justify = v;
@@ -1474,7 +2112,10 @@ const { $, $$ } = window.MTW;
         [
           ['nowrap', 'No Wrap'],
           ['wrap', 'Wrap'],
-          ['wrap-reverse', 'Wrap Reverse']
+          [
+            'wrap-reverse',
+            'Wrap Reverse'
+          ]
         ],
         v => {
           s.wrap = v;
@@ -1487,7 +2128,10 @@ const { $, $$ } = window.MTW;
         s.columns,
         v => {
           s.columns =
-            Math.max(1, Number(v) || 1);
+            Math.max(
+              1,
+              Number(v) || 1
+            );
 
           refreshCard(c.id);
         }
@@ -1498,7 +2142,10 @@ const { $, $$ } = window.MTW;
         s.rows,
         v => {
           s.rows =
-            Math.max(1, Number(v) || 1);
+            Math.max(
+              1,
+              Number(v) || 1
+            );
 
           refreshCard(c.id);
         }
@@ -1508,7 +2155,9 @@ const { $, $$ } = window.MTW;
         'Gap',
         s.gap,
         v => {
-          s.gap = Number(v) || 0;
+          s.gap =
+            Number(v) || 0;
+
           refreshCard(c.id);
         }
       ),
@@ -1517,7 +2166,9 @@ const { $, $$ } = window.MTW;
         'Row Gap',
         s.rowGap,
         v => {
-          s.rowGap = Number(v) || 0;
+          s.rowGap =
+            Number(v) || 0;
+
           refreshCard(c.id);
         }
       ),
@@ -1526,16 +2177,22 @@ const { $, $$ } = window.MTW;
         'Column Gap',
         s.columnGap,
         v => {
-          s.columnGap = Number(v) || 0;
+          s.columnGap =
+            Number(v) || 0;
+
           refreshCard(c.id);
         }
       )
     );
 
-    body.appendChild(settings);
+    body.appendChild(
+      settings
+    );
 
     const items =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     items.className =
       'et-grid-item-list';
@@ -1544,231 +2201,303 @@ const { $, $$ } = window.MTW;
 
       items.innerHTML = '';
 
-      s.items.forEach((item, index) => {
+      s.items.forEach(
+        (item, index) => {
 
-        const itemBox =
-          document.createElement('div');
-
-        itemBox.className =
-          'et-grid-item';
-
-        const itemHead =
-          document.createElement('div');
-
-        itemHead.className =
-          'et-grid-item-header';
-
-        const itemTitle =
-          document.createElement('div');
-
-        itemTitle.className =
-          'et-grid-item-title';
-
-        itemTitle.textContent =
-          'Grid Item ' + (index + 1);
-
-        const remove =
-          document.createElement('button');
-
-        remove.type = 'button';
-        remove.className =
-          'et-remove-button';
-
-        remove.textContent = '×';
-
-        remove.onclick = () => {
-
-          if (s.items.length <= 1) {
-            return;
-          }
-
-          s.items.splice(index, 1);
-
-          rebuildItems();
-          refreshCard(c.id);
-        };
-
-        itemHead.append(
-          itemTitle,
-          remove
-        );
-
-        const texts =
-          document.createElement('div');
-
-        texts.className =
-          'et-grid-item-texts';
-
-        item.texts =
-          Array.isArray(item.texts) &&
-          item.texts.length
-            ? item.texts
-            : [
-                {
-                  text: item.text || '',
-                  fields:
-                    item.fields ||
-                    clone(
-                      DEFAULT_FIELDS.description
-                    )
-                }
-              ];
-
-        item.text =
-          item.texts[0]?.text || '';
-
-        item.fields =
-          item.texts[0]?.fields ||
-          item.fields ||
-          clone(
-            DEFAULT_FIELDS.description
-          );
-
-        item.texts.forEach(
-          (txt, textIndex) => {
-
-            const textBox =
-              document.createElement('div');
-
-            textBox.className =
-              'et-grid-text';
-
-            const textHead =
-              document.createElement('div');
-
-            textHead.className =
-              'et-grid-text-header';
-
-            const textName =
-              document.createElement('div');
-
-            textName.className =
-              'et-grid-text-title';
-
-            textName.textContent =
-              'Text ' + (textIndex + 1);
-
-            const removeText =
-              document.createElement('button');
-
-            removeText.type = 'button';
-            removeText.className =
-              'et-remove-button';
-
-            removeText.textContent = '×';
-
-            removeText.onclick = () => {
-
-              if (
-                item.texts.length <= 1
-              ) {
-                return;
-              }
-
-              item.texts.splice(
-                textIndex,
-                1
-              );
-
-              item.text =
-                item.texts[0]?.text || '';
-
-              item.fields =
-                item.texts[0]?.fields ||
-                item.fields;
-
-              rebuildItems();
-              refreshCard(c.id);
-            };
-
-            textHead.append(
-              textName,
-              removeText
+          const itemBox =
+            document.createElement(
+              'div'
             );
 
-            const textarea =
-              document.createElement(
-                'textarea'
-              );
+          itemBox.className =
+            'et-grid-item';
 
-            textarea.className =
-              'et-field-input';
+          const itemHead =
+            document.createElement(
+              'div'
+            );
 
-            textarea.rows = 2;
-            textarea.value =
-              txt.text ?? '';
+          itemHead.className =
+            'et-grid-item-header';
 
-            textarea.oninput = () => {
+          const itemTitle =
+            document.createElement(
+              'div'
+            );
 
-              txt.text =
-                textarea.value;
+          itemTitle.className =
+            'et-grid-item-title';
 
-              if (textIndex === 0) {
-                item.text =
-                  textarea.value;
-              }
+          itemTitle.textContent =
+            'Grid Item ' +
+            (index + 1);
 
-              refreshCard(c.id);
-            };
+          const remove =
+            document.createElement(
+              'button'
+            );
 
-            textBox.append(
-              textHead,
-              textarea,
-              fieldSettings(
-                c,
-                txt,
-                () => {
+          remove.type =
+            'button';
 
-                  if (textIndex === 0) {
-                    item.text =
-                      txt.text;
+          remove.className =
+            'et-remove-button';
 
-                    item.fields =
-                      txt.fields;
+          remove.textContent =
+            '×';
+
+          remove.onclick = () => {
+
+            if (
+              s.items.length <= 1
+            ) {
+              return;
+            }
+
+            s.items.splice(
+              index,
+              1
+            );
+
+            rebuildItems();
+
+            refreshCard(
+              c.id
+            );
+          };
+
+          itemHead.append(
+            itemTitle,
+            remove
+          );
+
+          const texts =
+            document.createElement(
+              'div'
+            );
+
+          texts.className =
+            'et-grid-item-texts';
+
+          item.texts =
+            Array.isArray(
+              item.texts
+            ) &&
+            item.texts.length
+              ? item.texts
+              : [
+                  {
+                    text:
+                      item.text || '',
+                    fields:
+                      item.fields ||
+                      clone(
+                        DEFAULT_FIELDS
+                          .description
+                      )
                   }
+                ];
 
-                  refreshCard(c.id);
-                }
-              )
+          item.text =
+            item.texts[0]?.text ||
+            '';
+
+          item.fields =
+            item.texts[0]?.fields ||
+            item.fields ||
+            clone(
+              DEFAULT_FIELDS
+                .description
             );
 
-            texts.appendChild(textBox);
-          }
-        );
+          item.texts.forEach(
+            (txt, textIndex) => {
 
-        const addText =
-          document.createElement('button');
+              const textBox =
+                document.createElement(
+                  'div'
+                );
 
-        addText.type = 'button';
-        addText.className =
-          'et-small-add';
+              textBox.className =
+                'et-grid-text';
 
-        addText.textContent =
-          '+ Text';
+              const textHead =
+                document.createElement(
+                  'div'
+                );
 
-        addText.onclick = () => {
+              textHead.className =
+                'et-grid-text-header';
 
-          item.texts.push(
-            defaultText('')
+              const textName =
+                document.createElement(
+                  'div'
+                );
+
+              textName.className =
+                'et-grid-text-title';
+
+              textName.textContent =
+                'Text ' +
+                (textIndex + 1);
+
+              const removeText =
+                document.createElement(
+                  'button'
+                );
+
+              removeText.type =
+                'button';
+
+              removeText.className =
+                'et-remove-button';
+
+              removeText.textContent =
+                '×';
+
+              removeText.onclick = () => {
+
+                if (
+                  item.texts.length <= 1
+                ) {
+                  return;
+                }
+
+                item.texts.splice(
+                  textIndex,
+                  1
+                );
+
+                item.text =
+                  item.texts[0]?.text ||
+                  '';
+
+                item.fields =
+                  item.texts[0]?.fields ||
+                  item.fields;
+
+                rebuildItems();
+
+                refreshCard(
+                  c.id
+                );
+              };
+
+              textHead.append(
+                textName,
+                removeText
+              );
+
+              const textarea =
+                document.createElement(
+                  'textarea'
+                );
+
+              textarea.className =
+                'et-field-input';
+
+              textarea.rows = 2;
+
+              textarea.value =
+                txt.text ?? '';
+
+              textarea.oninput = () => {
+
+                txt.text =
+                  textarea.value;
+
+                if (
+                  textIndex === 0
+                ) {
+
+                  item.text =
+                    textarea.value;
+                }
+
+                refreshCard(
+                  c.id
+                );
+              };
+
+              textBox.append(
+                textHead,
+                textarea,
+                fieldSettings(
+                  c,
+                  txt,
+                  () => {
+
+                    if (
+                      textIndex === 0
+                    ) {
+
+                      item.text =
+                        txt.text;
+
+                      item.fields =
+                        txt.fields;
+                    }
+
+                    refreshCard(
+                      c.id
+                    );
+                  }
+                )
+              );
+
+              texts.appendChild(
+                textBox
+              );
+            }
           );
 
-          rebuildItems();
-          refreshCard(c.id);
-        };
+          const addText =
+            document.createElement(
+              'button'
+            );
 
-        itemBox.append(
-          itemHead,
-          texts,
-          addText
-        );
+          addText.type =
+            'button';
 
-        items.appendChild(itemBox);
-      });
+          addText.className =
+            'et-small-add';
+
+          addText.textContent =
+            '+ Text';
+
+          addText.onclick = () => {
+
+            item.texts.push(
+              defaultText('')
+            );
+
+            rebuildItems();
+
+            refreshCard(
+              c.id
+            );
+          };
+
+          itemBox.append(
+            itemHead,
+            texts,
+            addText
+          );
+
+          items.appendChild(
+            itemBox
+          );
+        }
+      );
 
       const addItem =
-        document.createElement('button');
+        document.createElement(
+          'button'
+        );
 
-      addItem.type = 'button';
+      addItem.type =
+        'button';
+
       addItem.className =
         'et-small-add';
 
@@ -1780,7 +2509,8 @@ const { $, $$ } = window.MTW;
         s.items.push({
           text: '',
           fields: clone(
-            DEFAULT_FIELDS.description
+            DEFAULT_FIELDS
+              .description
           ),
           texts: [
             defaultText('')
@@ -1788,45 +2518,65 @@ const { $, $$ } = window.MTW;
         });
 
         rebuildItems();
-        refreshCard(c.id);
+
+        refreshCard(
+          c.id
+        );
       };
 
-      items.appendChild(addItem);
+      items.appendChild(
+        addItem
+      );
     }
 
     rebuildItems();
 
-    body.appendChild(items);
+    body.appendChild(
+      items
+    );
 
-    box.append(head, body);
+    box.append(
+      head,
+      body
+    );
 
     return box;
   }
 
-  function simpleFieldEditor(c, key) {
+  function simpleFieldEditor(
+    c,
+    key
+  ) {
 
     const f =
       c.style.fields[key] ||
       (
-        c.style.fields[key] = clone(
-          DEFAULT_FIELDS[key]
-        )
+        c.style.fields[key] =
+          clone(
+            DEFAULT_FIELDS[key]
+          )
       );
 
     const box =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     box.className =
       'et-field-editor';
 
     const head =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     head.className =
       'et-field-editor-header';
 
     const name =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     name.className =
       'et-field-editor-name';
@@ -1835,28 +2585,42 @@ const { $, $$ } = window.MTW;
       FIELD_NAMES[key];
 
     const toggle =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    toggle.type = 'button';
+    toggle.type =
+      'button';
+
     toggle.className =
       'et-field-editor-toggle';
 
-    toggle.textContent = 'Edit';
+    toggle.textContent =
+      'Edit';
 
-    head.append(name, toggle);
+    head.append(
+      name,
+      toggle
+    );
 
     const body =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     body.className =
       'et-field-editor-body';
 
     toggle.onclick = () => {
 
-      box.classList.toggle('open');
+      box.classList.toggle(
+        'open'
+      );
 
       toggle.textContent =
-        box.classList.contains('open')
+        box.classList.contains(
+          'open'
+        )
           ? 'Close'
           : 'Edit';
     };
@@ -1891,7 +2655,9 @@ const { $, $$ } = window.MTW;
         f.size,
         v => {
           f.size =
-            v ? Number(v) : null;
+            v
+              ? Number(v)
+              : null;
 
           refreshCard(c.id);
         }
@@ -1901,7 +2667,9 @@ const { $, $$ } = window.MTW;
         'Line Height',
         f.line,
         v => {
-          f.line = v || null;
+          f.line =
+            v || null;
+
           refreshCard(c.id);
         }
       ),
@@ -1916,32 +2684,45 @@ const { $, $$ } = window.MTW;
       )
     );
 
-    box.append(head, body);
+    box.append(
+      head,
+      body
+    );
 
     return box;
   }
 
-  function section(title, children) {
+  function section(
+    title,
+    children
+  ) {
 
     const s =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     s.className =
       'et-edit-section';
 
     const h =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     h.className =
       'et-edit-section-title';
 
-    h.textContent = title;
+    h.textContent =
+      title;
 
     s.appendChild(h);
 
-    children.forEach(x => {
-      s.appendChild(x);
-    });
+    children.forEach(
+      x => {
+        s.appendChild(x);
+      }
+    );
 
     return s;
   }
@@ -1949,7 +2730,9 @@ const { $, $$ } = window.MTW;
   function buildPanel(c) {
 
     const panel =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     panel.className =
       'et-edit-panel';
@@ -1958,13 +2741,17 @@ const { $, $$ } = window.MTW;
       c.id;
 
     const header =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     header.className =
       'et-edit-panel-header';
 
     const title =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     title.className =
       'et-edit-panel-title';
@@ -1973,20 +2760,30 @@ const { $, $$ } = window.MTW;
       'Edit Card';
 
     const close =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    close.type = 'button';
+    close.type =
+      'button';
+
     close.className =
       'et-edit-panel-close';
 
-    close.textContent = '×';
+    close.textContent =
+      '×';
 
     close.onclick =
       hideEdit;
 
-    header.append(title, close);
+    header.append(
+      title,
+      close
+    );
 
-    panel.appendChild(header);
+    panel.appendChild(
+      header
+    );
 
     panel.appendChild(
       section(
@@ -2059,15 +2856,21 @@ const { $, $$ } = window.MTW;
     );
 
     const footer =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     footer.className =
       'et-edit-panel-footer';
 
     const reset =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    reset.type = 'button';
+    reset.type =
+      'button';
+
     reset.className =
       'et-edit-button';
 
@@ -2077,8 +2880,11 @@ const { $, $$ } = window.MTW;
     reset.onclick = () => {
 
       c.style = {
+
         fields:
-          clone(DEFAULT_FIELDS),
+          clone(
+            DEFAULT_FIELDS
+          ),
 
         description:
           defaultContent(
@@ -2114,13 +2920,33 @@ const { $, $$ } = window.MTW;
         buildPanel(c)
       );
 
-      refreshCard(c.id);
+      requestAnimationFrame(
+        () => {
+
+          const newPanel =
+            els.left.querySelector(
+              '.et-edit-panel'
+            );
+
+          if (newPanel) {
+            newPanel.scrollTop = 0;
+          }
+        }
+      );
+
+      refreshCard(
+        c.id
+      );
     };
 
     const copy =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    copy.type = 'button';
+    copy.type =
+      'button';
+
     copy.className =
       'et-edit-button';
 
@@ -2141,9 +2967,13 @@ const { $, $$ } = window.MTW;
     };
 
     const save =
-      document.createElement('button');
+      document.createElement(
+        'button'
+      );
 
-    save.type = 'button';
+    save.type =
+      'button';
+
     save.className =
       'et-edit-button primary';
 
@@ -2153,6 +2983,7 @@ const { $, $$ } = window.MTW;
     save.onclick = () => {
 
       renderList();
+
       hideEdit();
     };
 
@@ -2162,7 +2993,9 @@ const { $, $$ } = window.MTW;
       save
     );
 
-    panel.appendChild(footer);
+    panel.appendChild(
+      footer
+    );
 
     return panel;
   }
@@ -2178,7 +3011,9 @@ const { $, $$ } = window.MTW;
     }
 
     const style =
-      document.createElement('style');
+      document.createElement(
+        'style'
+      );
 
     style.id =
       'et-pricing-styles';
@@ -2318,27 +3153,38 @@ color:#fff
 filter:blur(2px) grayscale(90%)
 }
 
+.db-left-content.editing{
+width:100%;
+min-height:0
+}
+
 .et-edit-panel{
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 10px;
-    box-sizing: border-box;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+height:calc(100vh - 40px);
+max-height:calc(100vh - 40px);
+overflow-y:auto;
+overflow-x:hidden;
+padding-right:10px;
+box-sizing:border-box;
+overscroll-behavior:contain;
+scrollbar-width:thin;
+scrollbar-color:#ccc transparent;
 }
 
 .et-edit-panel::-webkit-scrollbar{
-    width: 6px;
+width:6px;
 }
 
 .et-edit-panel::-webkit-scrollbar-track{
-    background: transparent;
+background:transparent;
 }
 
 .et-edit-panel::-webkit-scrollbar-thumb{
-    background: #ccc;
-    border-radius: 10px;
+background:#ccc;
+border-radius:10px;
+}
+
+.et-edit-panel::-webkit-scrollbar-thumb:hover{
+background:#aaa;
 }
 
 .et-edit-panel-header{
@@ -2550,10 +3396,6 @@ color:#fff;
 border-color:#111
 }
 
-.db-left-content.editing{
-width:100%
-}
-
 @media print{
 
 @page{
@@ -2643,48 +3485,76 @@ visibility:hidden!important
 
 `;
 
-    document.head.appendChild(style);
+    document.head.appendChild(
+      style
+    );
   }
 
   function makeScrollable(el) {
 
     if (!el) return;
 
-    el.style.overflowY = 'auto';
-    el.style.overscrollBehavior = 'contain';
+    el.style.overflowY =
+      'auto';
+
+    el.style.overscrollBehavior =
+      'contain';
   }
 
   function onListClick(e) {
 
     const action =
-      e.target.closest('[btn]');
+      e.target.closest(
+        '[btn]'
+      );
 
     const row =
-      e.target.closest('[data-card-id]');
+      e.target.closest(
+        '[data-card-id]'
+      );
 
-    if (!action || !row) return;
+    if (
+      !action ||
+      !row
+    ) {
+      return;
+    }
 
     const i =
       row.dataset.cardId;
 
     if (
-      action.getAttribute('btn') ===
-      'edit'
+      action.getAttribute(
+        'btn'
+      ) === 'edit'
     ) {
-      openEdit(get(i));
+
+      openEdit(
+        get(i)
+      );
     }
 
     if (
-      action.getAttribute('btn') ===
-      'delete'
+      action.getAttribute(
+        'btn'
+      ) === 'delete'
     ) {
+
       del(i);
     }
   }
 
   function init() {
 
+    if (initialized) {
+      return;
+    }
+
+    initialized = true;
+
     cache();
+
+    injectStyles();
 
     if (els.type) {
 
@@ -2723,6 +3593,7 @@ visibility:hidden!important
     }
 
     if (els.list) {
+
       els.list.addEventListener(
         'click',
         onListClick
@@ -2735,7 +3606,8 @@ visibility:hidden!important
         'click',
         () => {
 
-          const c = add();
+          const c =
+            add();
 
           openEdit(c);
         }
@@ -2752,14 +3624,18 @@ visibility:hidden!important
       );
     }
 
-    makeScrollable(els.pages);
-    makeScrollable(els.list);
+    makeScrollable(
+      els.pages
+    );
 
-    injectStyles();
+    makeScrollable(
+      els.list
+    );
 
     window.addEventListener(
       'resize',
       () => {
+
         requestAnimationFrame(
           fitAll
         );
@@ -2770,7 +3646,9 @@ visibility:hidden!important
       'beforeprint',
       () => {
 
-        if (!els.pages) return;
+        if (!els.pages) {
+          return;
+        }
 
         let e =
           els.pages.parentElement;
@@ -2804,7 +3682,8 @@ visibility:hidden!important
             'important'
           );
 
-          e = e.parentElement;
+          e =
+            e.parentElement;
         }
       }
     );
@@ -2819,18 +3698,23 @@ visibility:hidden!important
     const panel =
       $('.et-body-wrapper');
 
-    if (!panel) return;
+    if (!panel) {
+      return;
+    }
 
     if (
       document.readyState ===
       'loading'
     ) {
+
       document.addEventListener(
         'DOMContentLoaded',
         init,
         { once: true }
       );
+
     } else {
+
       init();
     }
   }
