@@ -3154,8 +3154,10 @@ filter:blur(2px) grayscale(90%)
 }
 
 .db-left-content.editing{
-width:100%;
-min-height:0
+    width:100%;
+    height:100%;
+    min-height:0;
+    overflow:hidden;
 }
 
 .et-edit-panel{
