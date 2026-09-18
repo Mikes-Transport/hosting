@@ -185,13 +185,17 @@ const { $, $$ } = window.MTW;
 
     let items = [];
 
-    if (Array.isArray(x.items) && x.items.length) {
+    if (
+      Array.isArray(x.items) &&
+      x.items.length
+    ) {
 
       items = x.items.map(item => {
 
-        const fallback = defaultText(
-          item.text ?? ''
-        );
+        const fallback =
+          defaultText(
+            item.text ?? ''
+          );
 
         let texts;
 
@@ -200,33 +204,46 @@ const { $, $$ } = window.MTW;
           item.texts.length
         ) {
 
-          texts = item.texts.map(t => ({
-            text: t.text ?? '',
-            fields: Object.assign(
-              clone(fallback.fields),
-              t.fields || {}
-            )
-          }));
+          texts =
+            item.texts.map(t => ({
+              text:
+                t.text ?? '',
+              fields:
+                Object.assign(
+                  clone(
+                    fallback.fields
+                  ),
+                  t.fields || {}
+                )
+            }));
 
         } else {
 
           texts = [
             {
-              text: item.text ?? text,
-              fields: Object.assign(
-                clone(fallback.fields),
-                item.fields || {}
-              )
+              text:
+                item.text ?? text,
+              fields:
+                Object.assign(
+                  clone(
+                    fallback.fields
+                  ),
+                  item.fields || {}
+                )
             }
           ];
         }
 
         return {
-          text: texts[0]?.text ?? '',
-          fields: Object.assign(
-            clone(fallback.fields),
-            item.fields || {}
-          ),
+          text:
+            texts[0]?.text ?? '',
+          fields:
+            Object.assign(
+              clone(
+                fallback.fields
+              ),
+              item.fields || {}
+            ),
           texts
         };
       });
@@ -237,16 +254,26 @@ const { $, $$ } = window.MTW;
     }
 
     return {
-      display: x.display || d.display,
-      direction: x.direction || d.direction,
-      justify: x.justify || d.justify,
-      align: x.align || d.align,
-      wrap: x.wrap || d.wrap,
-      columns: Number(x.columns) || 1,
-      rows: Number(x.rows) || 1,
-      gap: Number(x.gap) || 0,
-      rowGap: Number(x.rowGap) || 0,
-      columnGap: Number(x.columnGap) || 0,
+      display:
+        x.display || d.display,
+      direction:
+        x.direction || d.direction,
+      justify:
+        x.justify || d.justify,
+      align:
+        x.align || d.align,
+      wrap:
+        x.wrap || d.wrap,
+      columns:
+        Number(x.columns) || 1,
+      rows:
+        Number(x.rows) || 1,
+      gap:
+        Number(x.gap) || 0,
+      rowGap:
+        Number(x.rowGap) || 0,
+      columnGap:
+        Number(x.columnGap) || 0,
       items
     };
   }
@@ -255,29 +282,38 @@ const { $, $$ } = window.MTW;
 
     const c = Object.assign({
 
-      id: 'card-' + (++id),
+      id:
+        'card-' +
+        (++id),
 
-      title: 'PRODUCT TITLE',
+      title:
+        'PRODUCT TITLE',
 
       description:
         'Product description goes here. Maximum of 2 lines.',
 
-      price: '999.99',
+      price:
+        '999.99',
 
-      oldPrice: '999.99',
+      oldPrice:
+        '999.99',
 
-      partNumber: '#00000',
+      partNumber:
+        '#00000',
 
-      extraNote: 'EXCLUSIVE OF GST'
+      extraNote:
+        'EXCLUSIVE OF GST'
 
     }, x);
 
-    c.style = c.style || {};
+    c.style =
+      c.style || {};
 
-    c.style.fields = Object.assign(
-      clone(DEFAULT_FIELDS),
-      c.style.fields || {}
-    );
+    c.style.fields =
+      Object.assign(
+        clone(DEFAULT_FIELDS),
+        c.style.fields || {}
+      );
 
     c.style.description =
       normalizeContent(
@@ -307,12 +343,15 @@ const { $, $$ } = window.MTW;
   }
 
   function get(i) {
-    return state.cards.find(c => c.id === i);
+    return state.cards.find(
+      c => c.id === i
+    );
   }
 
   function add(x) {
 
-    const c = cardData(x);
+    const c =
+      cardData(x);
 
     state.cards.push(c);
 
@@ -353,7 +392,7 @@ const { $, $$ } = window.MTW;
       $('.card-view-container');
 
     els.scrollBtn =
-      $('#card-scroll-btn');
+      $('.card-click-scroll');
 
     els.left =
       $('.db-left-content');
@@ -393,7 +432,11 @@ const { $, $$ } = window.MTW;
     }[v] || v;
   }
 
-  function fieldStyle(el, c, key) {
+  function fieldStyle(
+    el,
+    c,
+    key
+  ) {
 
     const f =
       ((c.style || {}).fields ||
@@ -415,9 +458,14 @@ const { $, $$ } = window.MTW;
       f.line || '';
   }
 
-  function applyContentStyle(el, c, key) {
+  function applyContentStyle(
+    el,
+    c,
+    key
+  ) {
 
-    const s = c.style[key];
+    const s =
+      c.style[key];
 
     if (!el || !s) return;
 
@@ -430,10 +478,14 @@ const { $, $$ } = window.MTW;
         s.direction || 'column';
 
       el.style.justifyContent =
-        flexJ(s.justify || 'start');
+        flexJ(
+          s.justify || 'start'
+        );
 
       el.style.alignItems =
-        flexA(s.align || 'stretch');
+        flexA(
+          s.align || 'stretch'
+        );
 
       el.style.flexWrap =
         s.wrap || 'nowrap';
@@ -473,31 +525,42 @@ const { $, $$ } = window.MTW;
 
     return [
       {
-        text: item.text ?? '',
-        fields: Object.assign(
-          {
-            v: 1,
-            a: 'left',
-            fit: 1,
-            size: null,
-            line: null
-          },
-          item.fields || {}
-        )
+        text:
+          item.text ?? '',
+        fields:
+          Object.assign(
+            {
+              v: 1,
+              a: 'left',
+              fit: 1,
+              size: null,
+              line: null
+            },
+            item.fields || {}
+          )
       }
     ];
   }
 
-  function buildContent(c, key, className) {
+  function buildContent(
+    c,
+    key,
+    className
+  ) {
 
-    const s = c.style[key];
+    const s =
+      c.style[key];
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    wrap.className = className;
+    wrap.className =
+      className;
 
-    wrap.dataset.content = key;
+    wrap.dataset.content =
+      key;
 
     applyContentStyle(
       wrap,
@@ -509,7 +572,9 @@ const { $, $$ } = window.MTW;
       (item, index) => {
 
         const cell =
-          document.createElement('div');
+          document.createElement(
+            'div'
+          );
 
         cell.className =
           'card-config-item';
@@ -532,52 +597,59 @@ const { $, $$ } = window.MTW;
             '0';
         }
 
-        getItemTexts(item).forEach(
-          (txt, textIndex) => {
+        getItemTexts(item)
+          .forEach(
+            (txt, textIndex) => {
 
-            const text =
-              document.createElement('div');
+              const text =
+                document.createElement(
+                  'div'
+                );
 
-            text.className =
-              'card-config-text';
+              text.className =
+                'card-config-text';
 
-            text.dataset.contentText =
-              textIndex;
+              text.dataset.contentText =
+                textIndex;
 
-            text.textContent =
-              txt.text || '';
+              text.textContent =
+                txt.text || '';
 
-            text.style.whiteSpace =
-              'pre-line';
+              text.style.whiteSpace =
+                'pre-line';
 
-            const f =
-              txt.fields || {
-                v: 1,
-                a: 'left',
-                fit: 1,
-                size: null,
-                line: null
-              };
+              const f =
+                txt.fields || {
+                  v: 1,
+                  a: 'left',
+                  fit: 1,
+                  size: null,
+                  line: null
+                };
 
-            text.style.display =
-              f.v ? '' : 'none';
+              text.style.display =
+                f.v ? '' : 'none';
 
-            text.style.textAlign =
-              f.a || 'left';
+              text.style.textAlign =
+                f.a || 'left';
 
-            text.style.fontSize =
-              f.size
-                ? f.size + 'px'
-                : '';
+              text.style.fontSize =
+                f.size
+                  ? f.size + 'px'
+                  : '';
 
-            text.style.lineHeight =
-              f.line || '';
+              text.style.lineHeight =
+                f.line || '';
 
-            cell.appendChild(text);
-          }
+              cell.appendChild(
+                text
+              );
+            }
+          );
+
+        wrap.appendChild(
+          cell
         );
-
-        wrap.appendChild(cell);
       }
     );
 
@@ -593,7 +665,9 @@ const { $, $$ } = window.MTW;
       TEXT_CLASS[state.layout];
 
     const wrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     wrap.className =
       t.card;
@@ -602,25 +676,33 @@ const { $, $$ } = window.MTW;
       c.id;
 
     const cut =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     cut.className =
       t.cut;
 
     const inner =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     inner.className =
       t.inner;
 
     const titleWrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     titleWrap.className =
       t.title;
 
     const h2 =
-      document.createElement('h2');
+      document.createElement(
+        'h2'
+      );
 
     h2.className =
       t.h2;
@@ -628,28 +710,38 @@ const { $, $$ } = window.MTW;
     h2.textContent =
       HEAD[state.type];
 
-    titleWrap.appendChild(h2);
+    titleWrap.appendChild(
+      h2
+    );
 
     const bw =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     bw.className =
       t.bodyWrap;
 
     const body =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     body.className =
       t.body;
 
     const top =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     top.className =
       'card-top-wrapper';
 
     const title =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     title.className =
       'card-grid-title';
@@ -658,7 +750,9 @@ const { $, $$ } = window.MTW;
       'title';
 
     const titleText =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     titleText.className =
       'card-text-title';
@@ -667,10 +761,14 @@ const { $, $$ } = window.MTW;
       c.title;
 
     if (size) {
-      titleText.classList.add(size);
+      titleText.classList.add(
+        size
+      );
     }
 
-    title.appendChild(titleText);
+    title.appendChild(
+      titleText
+    );
 
     const desc =
       buildContent(
@@ -688,13 +786,17 @@ const { $, $$ } = window.MTW;
     );
 
     const bottom =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     bottom.className =
       'card-bottom-wrapper';
 
     const price =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     price.className =
       'card-text-price';
@@ -703,24 +805,32 @@ const { $, $$ } = window.MTW;
       'price';
 
     if (size) {
-      price.classList.add(size);
+      price.classList.add(
+        size
+      );
     }
 
     if (t.price) {
-      price.classList.add(t.price);
+      price.classList.add(
+        t.price
+      );
     }
 
     price.textContent =
       '$' + c.price;
 
     const extraGrid =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     extraGrid.className =
       'card-extra-info-grid';
 
     const leftGroup =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     leftGroup.className =
       'card-extra-info';
@@ -751,7 +861,9 @@ const { $, $$ } = window.MTW;
     );
 
     const oldWrap =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     oldWrap.className =
       'card-old-price-wrapper';
@@ -766,7 +878,9 @@ const { $, $$ } = window.MTW;
     old.dataset.field =
       'oldPrice';
 
-    oldWrap.appendChild(old);
+    oldWrap.appendChild(
+      old
+    );
 
     extraGrid.append(
       leftGroup,
@@ -783,7 +897,9 @@ const { $, $$ } = window.MTW;
       bottom
     );
 
-    bw.appendChild(body);
+    bw.appendChild(
+      body
+    );
 
     inner.append(
       titleWrap,
@@ -796,7 +912,9 @@ const { $, $$ } = window.MTW;
     );
 
     const overlay =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     overlay.className =
       'et-card-overlay';
@@ -830,7 +948,9 @@ const { $, $$ } = window.MTW;
         openEdit(c);
       };
 
-    wrap.appendChild(overlay);
+    wrap.appendChild(
+      overlay
+    );
 
     applyElementSettings(
       wrap,
@@ -840,7 +960,10 @@ const { $, $$ } = window.MTW;
     return wrap;
   }
 
-  function applyElementSettings(el, c) {
+  function applyElementSettings(
+    el,
+    c
+  ) {
 
     const title =
       el.querySelector(
@@ -853,6 +976,7 @@ const { $, $$ } = window.MTW;
       );
 
     if (titleText) {
+
       fieldStyle(
         titleText,
         c,
@@ -865,71 +989,73 @@ const { $, $$ } = window.MTW;
       'partNumber',
       'extraNote',
       'oldPrice'
-    ].forEach(key => {
+    ].forEach(
+      key => {
 
-      const target =
-        el.querySelector(
-          '[data-field="' +
-          key +
-          '"]'
+        const target =
+          el.querySelector(
+            '[data-field="' +
+            key +
+            '"]'
+          );
+
+        if (!target) return;
+
+        applyContentStyle(
+          target,
+          c,
+          key
         );
 
-      if (!target) return;
+        target
+          .querySelectorAll(
+            '.card-config-item'
+          )
+          .forEach(
+            (cell, index) => {
 
-      applyContentStyle(
-        target,
-        c,
-        key
-      );
+              const item =
+                c.style[key]
+                  .items[index];
 
-      target
-        .querySelectorAll(
-          '.card-config-item'
-        )
-        .forEach(
-          (cell, index) => {
+              if (!item) return;
 
-            const item =
-              c.style[key]
-                .items[index];
+              getItemTexts(item)
+                .forEach(
+                  (txt, textIndex) => {
 
-            if (!item) return;
+                    const x =
+                      cell
+                        .querySelectorAll(
+                          '.card-config-text'
+                        )[textIndex];
 
-            getItemTexts(item)
-              .forEach(
-                (txt, textIndex) => {
+                    if (!x) return;
 
-                  const x =
-                    cell
-                      .querySelectorAll(
-                        '.card-config-text'
-                      )[textIndex];
+                    const f =
+                      txt.fields || {};
 
-                  if (!x) return;
+                    x.style.display =
+                      f.v
+                        ? ''
+                        : 'none';
 
-                  const f =
-                    txt.fields || {};
+                    x.style.textAlign =
+                      f.a || 'left';
 
-                  x.style.display =
-                    f.v
-                      ? ''
-                      : 'none';
+                    x.style.fontSize =
+                      f.size
+                        ? f.size + 'px'
+                        : '';
 
-                  x.style.textAlign =
-                    f.a || 'left';
-
-                  x.style.fontSize =
-                    f.size
-                      ? f.size + 'px'
-                      : '';
-
-                  x.style.lineHeight =
-                    f.line || '';
-                }
-              );
-          }
-        );
-    });
+                    x.style.lineHeight =
+                      f.line || '';
+                  }
+                );
+            }
+          );
+      }
+    );
 
     const price =
       el.querySelector(
@@ -937,6 +1063,7 @@ const { $, $$ } = window.MTW;
       );
 
     if (price) {
+
       fieldStyle(
         price,
         c,
@@ -955,9 +1082,11 @@ const { $, $$ } = window.MTW;
         '.card-text-price-old,' +
         '.card-text-extra'
       )
-      .forEach(x => {
-        x.style.fontSize = '';
-      });
+      .forEach(
+        x => {
+          x.style.fontSize = '';
+        }
+      );
   }
 
   function fitAll() {
@@ -968,113 +1097,119 @@ const { $, $$ } = window.MTW;
         '.et-clearance-card[data-card-id],' +
         '.et-promo-card[data-card-id]'
       )
-      .forEach(el => {
+      .forEach(
+        el => {
 
-        const top =
-          el.querySelector(
-            '.card-top-wrapper'
-          );
-
-        if (!top) return;
-
-        const keys = [
-          ['price', .55, .97],
-          ['oldPrice', .75, .99],
-          ['partNumber', .75, .99],
-          ['extraNote', .75, .99],
-          ['title', .85, .995],
-          ['description', .85, .995]
-        ];
-
-        const base = {};
-
-        keys.forEach(x => {
-
-          const e =
+          const top =
             el.querySelector(
-              '[data-field="' +
-              x[0] +
-              '"]'
+              '.card-top-wrapper'
             );
 
-          base[x[0]] =
-            e
-              ? parseFloat(
-                  getComputedStyle(e)
-                    .fontSize
-                ) || 0
-              : 0;
-        });
+          if (!top) return;
 
-        let n = 0;
+          const keys = [
+            ['price', .55, .97],
+            ['oldPrice', .75, .99],
+            ['partNumber', .75, .99],
+            ['extraNote', .75, .99],
+            ['title', .85, .995],
+            ['description', .85, .995]
+          ];
 
-        while (
-          n < 80 &&
-          top.scrollHeight >
-            top.clientHeight + 1
-        ) {
-
-          let changed =
-            false;
+          const base = {};
 
           keys.forEach(
-            ([k, min, ratio]) => {
+            x => {
 
               const e =
                 el.querySelector(
                   '[data-field="' +
-                  k +
+                  x[0] +
                   '"]'
                 );
 
-              if (!e) return;
-
-              const cur =
-                parseFloat(
-                  getComputedStyle(e)
-                    .fontSize
-                ) || 0;
-
-              const floor =
-                base[k] * min;
-
-              if (cur > floor) {
-
-                const next =
-                  Math.max(
-                    cur * ratio,
-                    floor
-                  );
-
+              base[x[0]] =
                 e
-                  .querySelectorAll(
-                    '.card-config-text'
-                  )
-                  .forEach(x => {
-                    x.style.fontSize =
-                      next + 'px';
-                  });
-
-                if (
-                  k === 'title' ||
-                  k === 'price'
-                ) {
-                  e.style.fontSize =
-                    next + 'px';
-                }
-
-                if (next < cur) {
-                  changed = true;
-                }
-              }
+                  ? parseFloat(
+                      getComputedStyle(e)
+                        .fontSize
+                    ) || 0
+                  : 0;
             }
           );
 
-          if (!changed) break;
+          let n = 0;
 
-          n++;
+          while (
+            n < 80 &&
+            top.scrollHeight >
+              top.clientHeight + 1
+          ) {
+
+            let changed =
+              false;
+
+            keys.forEach(
+              ([k, min, ratio]) => {
+
+                const e =
+                  el.querySelector(
+                    '[data-field="' +
+                    k +
+                    '"]'
+                  );
+
+                if (!e) return;
+
+                const cur =
+                  parseFloat(
+                    getComputedStyle(e)
+                      .fontSize
+                  ) || 0;
+
+                const floor =
+                  base[k] * min;
+
+                if (cur > floor) {
+
+                  const next =
+                    Math.max(
+                      cur * ratio,
+                      floor
+                    );
+
+                  e
+                    .querySelectorAll(
+                      '.card-config-text'
+                    )
+                    .forEach(
+                      x => {
+                        x.style.fontSize =
+                          next + 'px';
+                      }
+                    );
+
+                  if (
+                    k === 'title' ||
+                    k === 'price'
+                  ) {
+                    e.style.fontSize =
+                      next + 'px';
+                  }
+
+                  if (next < cur) {
+                    changed = true;
+                  }
+                }
+              }
+            );
+
+            if (!changed) break;
+
+            n++;
+          }
         }
-      });
+      );
   }
 
   function live(c, key) {
@@ -1153,45 +1288,51 @@ const { $, $$ } = window.MTW;
               }
 
               getItemTexts(item)
-                .forEach(txt => {
+                .forEach(
+                  txt => {
 
-                  const text =
-                    document.createElement(
-                      'div'
+                    const text =
+                      document.createElement(
+                        'div'
+                      );
+
+                    text.className =
+                      'card-config-text';
+
+                    text.textContent =
+                      txt.text || '';
+
+                    text.style.whiteSpace =
+                      'pre-line';
+
+                    const f =
+                      txt.fields || {};
+
+                    text.style.display =
+                      f.v
+                        ? ''
+                        : 'none';
+
+                    text.style.textAlign =
+                      f.a || 'left';
+
+                    text.style.fontSize =
+                      f.size
+                        ? f.size + 'px'
+                        : '';
+
+                    text.style.lineHeight =
+                      f.line || '';
+
+                    cell.appendChild(
+                      text
                     );
+                  }
+                );
 
-                  text.className =
-                    'card-config-text';
-
-                  text.textContent =
-                    txt.text || '';
-
-                  text.style.whiteSpace =
-                    'pre-line';
-
-                  const f =
-                    txt.fields || {};
-
-                  text.style.display =
-                    f.v
-                      ? ''
-                      : 'none';
-
-                  text.style.textAlign =
-                    f.a || 'left';
-
-                  text.style.fontSize =
-                    f.size
-                      ? f.size + 'px'
-                      : '';
-
-                  text.style.lineHeight =
-                    f.line || '';
-
-                  cell.appendChild(text);
-                });
-
-              target.appendChild(cell);
+              target.appendChild(
+                cell
+              );
             }
           );
 
@@ -1210,17 +1351,17 @@ const { $, $$ } = window.MTW;
       }
     }
 
-    const row =
+    const currentRow =
       els.cardView?.querySelector(
         '[data-card-id="' +
         c.id +
         '"]'
       );
 
-    if (row) {
+    if (currentRow) {
 
       const txt =
-        row.querySelectorAll(
+        currentRow.querySelectorAll(
           '.et-small-txt'
         );
 
@@ -1244,7 +1385,8 @@ const { $, $$ } = window.MTW;
 
   function refreshCard(i) {
 
-    const c = get(i);
+    const c =
+      get(i);
 
     if (!c) return;
 
@@ -1266,7 +1408,9 @@ const { $, $$ } = window.MTW;
       const fresh =
         build(c);
 
-      old.replaceWith(fresh);
+      old.replaceWith(
+        fresh
+      );
 
       requestAnimationFrame(
         fitAll
@@ -1341,7 +1485,9 @@ const { $, $$ } = window.MTW;
     et.textContent =
       'Edit';
 
-    edit.appendChild(et);
+    edit.appendChild(
+      et
+    );
 
     const remove =
       document.createElement(
@@ -1367,7 +1513,9 @@ const { $, $$ } = window.MTW;
     rt.textContent =
       'X';
 
-    remove.appendChild(rt);
+    remove.appendChild(
+      rt
+    );
 
     actions.append(
       edit,
@@ -1384,8 +1532,7 @@ const { $, $$ } = window.MTW;
   }
 
   function scrollCurrentCards(
-    container,
-    direction
+    container
   ) {
 
     if (!container) return;
@@ -1398,48 +1545,17 @@ const { $, $$ } = window.MTW;
 
     container.scrollBy({
       left:
-        amount * direction,
+        amount,
       behavior:
         'smooth'
     });
   }
 
-  function updateCurrentCardButton(
-    container,
-    button
-  ) {
-
-    if (!container || !button) {
-      return;
-    }
-
-    const max =
-      Math.max(
-        0,
-        container.scrollWidth -
-        container.clientWidth
-      );
-
-    const hasOverflow =
-      max > 2;
-
-    const atEnd =
-      container.scrollLeft >=
-      max - 2;
-
-    button.style.display =
-      hasOverflow
-        ? ''
-        : 'none';
-
-    button.disabled =
-      !hasOverflow ||
-      atEnd;
-  }
-
   function renderList() {
 
-    if (!els.cardView) return;
+    if (!els.cardView) {
+      return;
+    }
 
     els.cardView.innerHTML = '';
 
@@ -1460,35 +1576,10 @@ const { $, $$ } = window.MTW;
           e.stopPropagation();
 
           scrollCurrentCards(
-            els.cardView,
-            1
+            els.cardView
           );
         };
     }
-
-    els.cardView.onscroll =
-      () => {
-
-        updateCurrentCardButton(
-          els.cardView,
-          els.scrollBtn
-        );
-      };
-
-    requestAnimationFrame(
-      () => {
-
-        requestAnimationFrame(
-          () => {
-
-            updateCurrentCardButton(
-              els.cardView,
-              els.scrollBtn
-            );
-          }
-        );
-      }
-    );
   }
 
   function chunk(a, n) {
@@ -1534,75 +1625,83 @@ const { $, $$ } = window.MTW;
           )
         : [[]];
 
-    pages.forEach(cards => {
+    pages.forEach(
+      cards => {
 
-      const page =
-        document.createElement(
-          'div'
+        const page =
+          document.createElement(
+            'div'
+          );
+
+        page.className =
+          'et-page';
+
+        page.style.width =
+          '210mm';
+
+        page.style.height =
+          '297mm';
+
+        page.style.boxSizing =
+          'border-box';
+
+        page.style.overflow =
+          'hidden';
+
+        const grid =
+          document.createElement(
+            'div'
+          );
+
+        grid.className =
+          'et-grid-cards ' +
+          state.layout;
+
+        const g =
+          GRID[state.layout];
+
+        grid.style.display =
+          'grid';
+
+        grid.style.gridTemplateColumns =
+          'repeat(' +
+          g[0] +
+          ',1fr)';
+
+        grid.style.gridTemplateRows =
+          'repeat(' +
+          g[1] +
+          ',1fr)';
+
+        grid.style.gridAutoFlow =
+          'row';
+
+        grid.style.width =
+          '100%';
+
+        grid.style.height =
+          '100%';
+
+        grid.style.boxSizing =
+          'border-box';
+
+        cards.forEach(
+          c => {
+            grid.appendChild(
+              build(c)
+            );
+          }
         );
 
-      page.className =
-        'et-page';
-
-      page.style.width =
-        '210mm';
-
-      page.style.height =
-        '297mm';
-
-      page.style.boxSizing =
-        'border-box';
-
-      page.style.overflow =
-        'hidden';
-
-      const grid =
-        document.createElement(
-          'div'
+        page.appendChild(
+          grid
         );
 
-      grid.className =
-        'et-grid-cards ' +
-        state.layout;
-
-      const g =
-        GRID[state.layout];
-
-      grid.style.display =
-        'grid';
-
-      grid.style.gridTemplateColumns =
-        'repeat(' +
-        g[0] +
-        ',1fr)';
-
-      grid.style.gridTemplateRows =
-        'repeat(' +
-        g[1] +
-        ',1fr)';
-
-      grid.style.gridAutoFlow =
-        'row';
-
-      grid.style.width =
-        '100%';
-
-      grid.style.height =
-        '100%';
-
-      grid.style.boxSizing =
-        'border-box';
-
-      cards.forEach(c => {
-        grid.appendChild(
-          build(c)
+        els.pages.appendChild(
+          page
         );
-      });
-
-      page.appendChild(grid);
-
-      els.pages.appendChild(page);
-    });
+      }
+    );
 
     renderList();
 
@@ -1723,15 +1822,19 @@ const { $, $$ } = window.MTW;
             'option'
           );
 
-        o.value = v;
+        o.value =
+          v;
 
-        o.textContent = t;
+        o.textContent =
+          t;
 
         o.selected =
           String(v) ===
           String(value);
 
-        s.appendChild(o);
+        s.appendChild(
+          o
+        );
       }
     );
 
@@ -1786,7 +1889,9 @@ const { $, $$ } = window.MTW;
       value ?? '';
 
     input.oninput =
-      () => fn(input.value);
+      () => fn(
+        input.value
+      );
 
     wrap.append(
       l,
@@ -1929,8 +2034,10 @@ const { $, $$ } = window.MTW;
             ];
           }
 
-          content.items[0].texts[0].text =
-            input.value;
+          content.items[0]
+            .texts[0]
+            .text =
+              input.value;
         }
       }
 
@@ -2502,7 +2609,6 @@ const { $, $$ } = window.MTW;
                 if (
                   textIndex === 0
                 ) {
-
                   item.text =
                     textarea.value;
                 }
@@ -2601,10 +2707,11 @@ const { $, $$ } = window.MTW;
 
         s.items.push({
           text: '',
-          fields: clone(
-            DEFAULT_FIELDS
-              .description
-          ),
+          fields:
+            clone(
+              DEFAULT_FIELDS
+                .description
+            ),
           texts: [
             defaultText('')
           ]
@@ -2809,7 +2916,9 @@ const { $, $$ } = window.MTW;
     h.textContent =
       title;
 
-    s.appendChild(h);
+    s.appendChild(
+      h
+    );
 
     children.forEach(
       x => {
@@ -3022,7 +3131,8 @@ const { $, $$ } = window.MTW;
             );
 
           if (newPanel) {
-            newPanel.scrollTop = 0;
+            newPanel.scrollTop =
+              0;
           }
         }
       );
@@ -3266,11 +3376,6 @@ height:0!important
 .card-view-container > .et-current-card{
 flex:0 0 auto!important;
 min-width:0!important
-}
-
-#card-scroll-btn:disabled{
-opacity:.35;
-cursor:default
 }
 
 .db-left-content.editing{
@@ -3645,14 +3750,6 @@ visibility:hidden!important
       return;
     }
 
-    if (
-      action.getAttribute(
-        'btn'
-      ) === 'next-card'
-    ) {
-      return;
-    }
-
     const row =
       e.target.closest(
         '[data-card-id]'
@@ -3779,10 +3876,6 @@ visibility:hidden!important
 
             fitAll();
 
-            updateCurrentCardButton(
-              els.cardView,
-              els.scrollBtn
-            );
           }
         );
       }
