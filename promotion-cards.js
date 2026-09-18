@@ -989,6 +989,9 @@ const { $, $$ } = window.MTW;
 
     [
       'description',
+      'partNumber',
+      'extraNote',
+      'oldPrice'
     ].forEach(
       key => {
 
@@ -1565,19 +1568,6 @@ const { $, $$ } = window.MTW;
       );
     }
   );
-}
-
-  if (els.scrollBtnRight) {
-    els.scrollBtnRight.onclick = e => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      els.cardView.scrollBy({
-        left: Math.max(1, els.cardView.clientWidth - 40),
-        behavior: 'smooth'
-      });
-    };
-  }
 }
 
   function chunk(a, n) {
@@ -3790,10 +3780,11 @@ visibility:hidden!important
     initialized = true;
 
     cache();
-    injectStyles();
-    
-    if (els.scrollBtnLeft) {
 
+    injectStyles();
+
+    if (els.scrollBtnLeft) {
+    
       els.scrollBtnLeft.onclick =
         e => {
     
@@ -3821,6 +3812,7 @@ visibility:hidden!important
           );
         };
     }
+        
 
     if (els.type) {
 
