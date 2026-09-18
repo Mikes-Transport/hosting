@@ -3773,171 +3773,143 @@ visibility:hidden!important
 
   function init() {
 
-  if (initialized) {
-    render();
-    return;
-  }
-
   cache();
 
   if (!els.cardView || !els.pages) {
-    initialized = false;
-    start();
+    setTimeout(start, 100);
     return;
   }
 
-  initialized = true;
+  if (!initialized) {
 
-  injectStyles();
+    initialized = true;
 
-  if (els.scrollBtnLeft) {
-    els.scrollBtnLeft.onclick = e => {
-      e.preventDefault();
-      e.stopPropagation();
-      scrollCurrentCards(
-        els.cardView,
-        -1
-      );
-    };
-  }
+    injectStyles();
 
-  if (els.scrollBtnRight) {
-    els.scrollBtnRight.onclick = e => {
-      e.preventDefault();
-      e.stopPropagation();
-      scrollCurrentCards(
-        els.cardView,
-        1
-      );
-    };
-  }
+    if (els.scrollBtnLeft) {
+      els.scrollBtnLeft.onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCurrentCards(
+          els.cardView,
+          -1
+        );
+      };
+    }
 
-  if (els.type) {
+    if (els.scrollBtnRight) {
+      els.scrollBtnRight.onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCurrentCards(
+          els.cardView,
+          1
+        );
+      };
+    }
 
-    els.type.value =
-      state.type;
+    if (els.type) {
+      els.type.value = state.type;
 
-    els.type.addEventListener(
-      'change',
-      e => {
-
-        state.type =
-          e.target.value;
-
-        state.cards = [];
-
-        add();
-      }
-    );
-  }
-
-  if (els.layout) {
-
-    els.layout.value =
-      state.layout;
-
-    els.layout.addEventListener(
-      'change',
-      e => {
-
-        state.layout =
-          e.target.value;
-
-        render();
-      }
-    );
-  }
-
-  if (els.list) {
-    els.list.addEventListener(
-      'click',
-      onListClick
-    );
-  }
-
-  if (els.add) {
-
-    els.add.addEventListener(
-      'click',
-      () => {
-
-        const c =
+      els.type.addEventListener(
+        'change',
+        e => {
+          state.type = e.target.value;
+          state.cards = [];
           add();
-
-        openEdit(c);
-      }
-    );
-  }
-
-  if (els.print) {
-
-    els.print.addEventListener(
-      'click',
-      () => {
-        window.print();
-      }
-    );
-  }
-
-  makeScrollable(
-    els.pages
-  );
-
-  window.addEventListener(
-    'resize',
-    () => {
-
-      requestAnimationFrame(
-        fitAll
+        }
       );
     }
-  );
 
-  window.addEventListener(
-    'beforeprint',
-    () => {
+    if (els.layout) {
+      els.layout.value = state.layout;
 
-      if (!els.pages) {
-        return;
-      }
-
-      let e =
-        els.pages.parentElement;
-
-      while (
-        e &&
-        e !== document.body
-      ) {
-
-        e.style.setProperty(
-          'overflow',
-          'visible',
-          'important'
-        );
-
-        e.style.setProperty(
-          'height',
-          'auto',
-          'important'
-        );
-
-        e.style.setProperty(
-          'max-height',
-          'none',
-          'important'
-        );
-
-        e.style.setProperty(
-          'transform',
-          'none',
-          'important'
-        );
-
-        e =
-          e.parentElement;
-      }
+      els.layout.addEventListener(
+        'change',
+        e => {
+          state.layout = e.target.value;
+          render();
+        }
+      );
     }
-  );
+
+    if (els.list) {
+      els.list.addEventListener(
+        'click',
+        onListClick
+      );
+    }
+
+    if (els.add) {
+      els.add.addEventListener(
+        'click',
+        () => {
+          const c = add();
+          openEdit(c);
+        }
+      );
+    }
+
+    if (els.print) {
+      els.print.addEventListener(
+        'click',
+        () => {
+          window.print();
+        }
+      );
+    }
+
+    window.addEventListener(
+      'resize',
+      () => {
+        requestAnimationFrame(fitAll);
+      }
+    );
+
+    window.addEventListener(
+      'beforeprint',
+      () => {
+
+        if (!els.pages) return;
+
+        let e = els.pages.parentElement;
+
+        while (
+          e &&
+          e !== document.body
+        ) {
+
+          e.style.setProperty(
+            'overflow',
+            'visible',
+            'important'
+          );
+
+          e.style.setProperty(
+            'height',
+            'auto',
+            'important'
+          );
+
+          e.style.setProperty(
+            'max-height',
+            'none',
+            'important'
+          );
+
+          e.style.setProperty(
+            'transform',
+            'none',
+            'important'
+          );
+
+          e = e.parentElement;
+        }
+      }
+    );
+  }
+
+  makeScrollable(els.pages);
 
   if (!state.cards.length) {
     add();
@@ -3948,16 +3920,6 @@ visibility:hidden!important
 
   function start() {
 
-  cache();
-
-  if (!els.cardView || !els.pages) {
-    setTimeout(
-      start,
-      100
-    );
-    return;
-  }
-
   if (
     document.readyState ===
     'loading'
@@ -3965,14 +3927,29 @@ visibility:hidden!important
 
     document.addEventListener(
       'DOMContentLoaded',
-      () => init(),
+      start,
       { once: true }
     );
 
-  } else {
-
-    init();
+    return;
   }
+
+  cache();
+
+  if (
+    !els.cardView ||
+    !els.pages
+  ) {
+
+    setTimeout(
+      start,
+      100
+    );
+
+    return;
+  }
+
+  init();
 }
 
   document.addEventListener(
