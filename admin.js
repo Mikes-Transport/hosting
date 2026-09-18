@@ -5,7 +5,8 @@
   const ACCESS = {
     Counter: [
       'promotion-label',
-      'barcodes'
+      'barcodes',
+      'secondhand-tool'
     ],
 
     Admin: [
