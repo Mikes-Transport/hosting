@@ -3921,10 +3921,8 @@ visibility:hidden!important
   function start() {
 
   if (
-    document.readyState ===
-    'loading'
+    document.readyState === 'loading'
   ) {
-
     document.addEventListener(
       'DOMContentLoaded',
       start,
@@ -3940,7 +3938,6 @@ visibility:hidden!important
     !els.cardView ||
     !els.pages
   ) {
-
     setTimeout(
       start,
       100
@@ -3952,20 +3949,21 @@ visibility:hidden!important
   init();
 }
 
-  document.addEventListener(
-    'db-tool-open',
-    e => {
+document.addEventListener(
+  'db-tool-open',
+  e => {
 
-      if (
-        e.detail?.id !==
-        'promotion-label'
-      ) {
-        return;
-      }
-
-      start();
+    if (
+      e.detail?.id !== 'promotion-label'
+    ) {
+      return;
     }
-  );
+
+    start();
+  }
+);
+
+start();
 
   window.ETPricingTool = {
     state,
