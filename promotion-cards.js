@@ -1535,45 +1535,40 @@ const { $, $$ } = window.MTW;
   }
 
   function scrollCurrentCards(
-    container
-  ) {
+  container,
+  direction
+) {
 
-    if (!container) return;
+  if (!container) return;
 
-    const amount =
-      Math.max(
-        1,
-        container.clientWidth - 40
-      );
+  const amount =
+    Math.max(
+      1,
+      container.clientWidth - 40
+    );
 
-    container.scrollBy({
-      left:
-        amount,
-      behavior:
-        'smooth'
-    });
-  }
+  container.scrollBy({
+    left:
+      amount * direction,
+    behavior:
+      'smooth'
+  });
+}
 
   function renderList() {
+
   if (!els.cardView) return;
 
   els.cardView.innerHTML = '';
 
-  state.cards.forEach(c => {
-    els.cardView.appendChild(row(c));
-  });
-
-  if (els.scrollBtnLeft) {
-    els.scrollBtnLeft.onclick = e => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      els.cardView.scrollBy({
-        left: -Math.max(1, els.cardView.clientWidth - 40),
-        behavior: 'smooth'
-      });
-    };
-  }
+  state.cards.forEach(
+    c => {
+      els.cardView.appendChild(
+        row(c)
+      );
+    }
+  );
+}
 
   if (els.scrollBtnRight) {
     els.scrollBtnRight.onclick = e => {
@@ -3798,8 +3793,37 @@ visibility:hidden!important
     initialized = true;
 
     cache();
-
     injectStyles();
+    
+    if (els.scrollBtnLeft) {
+
+      els.scrollBtnLeft.onclick =
+        e => {
+    
+          e.preventDefault();
+          e.stopPropagation();
+    
+          scrollCurrentCards(
+            els.cardView,
+            -1
+          );
+        };
+    }
+    
+    if (els.scrollBtnRight) {
+    
+      els.scrollBtnRight.onclick =
+        e => {
+    
+          e.preventDefault();
+          e.stopPropagation();
+    
+          scrollCurrentCards(
+            els.cardView,
+            1
+          );
+        };
+    }
 
     if (els.type) {
 
