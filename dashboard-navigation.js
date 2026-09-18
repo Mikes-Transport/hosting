@@ -10,7 +10,8 @@ const { $, $$ } = window.MTW;
     'product-info': '.product-tool-panel',
     'csv-config': '.csv-tool-panel',
     'mte-config': '.master-list-config',
-    'promotion-label': '.et-body-wrapper'
+    'promotion-label': '.et-body-wrapper',
+    'barcodes': ''
   };
 
   const NAMES = {
@@ -19,7 +20,8 @@ const { $, $$ } = window.MTW;
     'product-info': 'Product Information',
     'csv-config': 'CSV Config',
     'mte-config': 'MTE Config',
-    'promotion-label': 'Promotional Labels'
+    'promotion-label': 'Promotional Labels',
+    'barcodes': 'Barcode Labels'
   };
 
   function hideAll() {
