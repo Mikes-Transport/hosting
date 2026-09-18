@@ -1555,52 +1555,49 @@ const { $, $$ } = window.MTW;
   }
 
   function renderList() {
+  if (!els.cardView) return;
 
-    if (!els.cardView) {
-      return;
-    }
+  const scrollBtnLeft = els.scrollBtnLeft;
+  const scrollBtnRight = els.scrollBtnRight;
 
-    els.cardView.innerHTML = '';
+  els.cardView.innerHTML = '';
 
-    state.cards.forEach(
-      c => {
-        els.cardView.appendChild(
-          row(c)
-        );
-      }
-    );
+  state.cards.forEach(c => {
+    els.cardView.appendChild(row(c));
+  });
 
-     const scrollBtnLeft = els.scrollBtnLeft;
-    const scrollBtn = els.scrollBtnRight;
-    
-    if (scrollBtnLeft && els.list && scrollBtnLeft.parentElement !== els.list) {
-      els.list.appendChild(scrollBtnLeft);
-    }
-    
-    if (scrollBtnRight && els.list && scrollBtnRight.parentElement !== els.list) {
-      els.list.appendChild(scrollBtnRight);
-    }
-    
-    if (scrollBtnLeft) {
-      scrollBtnLeft.onclick = e => {
-        e.preventDefault();
-        e.stopPropagation();
-        els.cardView.scrollBy({
-          left: -Math.max(1, els.cardView.clientWidth - 40),
-          behavior: 'smooth'
-        });
-      };
-    }
-    
-    if (scrollBtnRight) {
-      scrollBtnRight.onclick = e => {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollCurrentCards(els.cardView);
-      };
-    }
+  if (scrollBtnLeft && els.list && scrollBtnLeft.parentElement !== els.list) {
+    els.list.appendChild(scrollBtnLeft);
   }
+
+  if (scrollBtnRight && els.list && scrollBtnRight.parentElement !== els.list) {
+    els.list.appendChild(scrollBtnRight);
   }
+
+  if (scrollBtnLeft) {
+    scrollBtnLeft.onclick = e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      els.cardView.scrollBy({
+        left: -Math.max(1, els.cardView.clientWidth - 40),
+        behavior: 'smooth'
+      });
+    };
+  }
+
+  if (scrollBtnRight) {
+    scrollBtnRight.onclick = e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      els.cardView.scrollBy({
+        left: Math.max(1, els.cardView.clientWidth - 40),
+        behavior: 'smooth'
+      });
+    };
+  }
+}
 
   function chunk(a, n) {
 
