@@ -1,6 +1,3 @@
-console.log("YOUR MOM")
-
-
 const {
   db,
   $,
