@@ -1,8 +1,10 @@
-console.log("barcodes");
-
 'use strict';
 
 (function () {
+
+  console.log(
+    '[Barcodes] Module loaded'
+  );
 
   const TEMPLATES = {
     standard: {
@@ -28,18 +30,38 @@ console.log("barcodes");
 
   function init() {
 
+    console.log(
+      '[Barcodes] Starting'
+    );
+
     const CARD =
       document.querySelector(
         '#barcode-drop'
       );
 
-    if (!CARD) return;
+    if (!CARD) {
+
+      console.log(
+        '[Barcodes] #barcode-drop not found'
+      );
+
+      return;
+    }
+
+    console.log(
+      '[Barcodes] #barcode-drop found'
+    );
 
     if (
       document.querySelector(
         '.barcode-dropdown-menu'
       )
     ) {
+
+      console.log(
+        '[Barcodes] Already initialized'
+      );
+
       return;
     }
 
@@ -94,6 +116,10 @@ console.log("barcodes");
       MENU
     );
 
+    console.log(
+      '[Barcodes] Dropdown created'
+    );
+
     CARD.addEventListener(
       'click',
       e => {
@@ -103,6 +129,10 @@ console.log("barcodes");
 
         MENU.classList.toggle(
           'open'
+        );
+
+        console.log(
+          '[Barcodes] Dropdown toggled'
         );
 
       }
@@ -124,6 +154,11 @@ console.log("barcodes");
             const template =
               item.dataset
                 .barcodeTemplate;
+
+            console.log(
+              '[Barcodes] Template selected:',
+              template
+            );
 
             MENU.classList.remove(
               'open'
@@ -151,6 +186,10 @@ console.log("barcodes");
 
         e.preventDefault();
         e.stopPropagation();
+
+        console.log(
+          '[Barcodes] History selected'
+        );
 
         MENU.classList.remove(
           'open'
@@ -183,17 +222,26 @@ console.log("barcodes");
 
   }
 
-  if (
-    document.readyState ===
-    'loading'
-  ) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      init,
-      { once: true }
-    );
-  } else {
-    init();
-  }
+  document.addEventListener(
+    'db-tool-open',
+    e => {
+
+      console.log(
+        '[Barcodes] db-tool-open:',
+        e.detail
+      );
+
+      if (
+        e.detail?.id !== 'barcodes'
+      ) {
+        return;
+      }
+
+      init();
+
+    }
+  );
+
+  init();
 
 })();
