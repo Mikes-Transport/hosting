@@ -1,3 +1,6 @@
+console.log("U MOM LOADED ASS CHECKESADAD");
+
+
 const { db, $, $$, collection, getDocs, doc, addDoc, updateDoc, deleteDoc } = window.MTW;
 
 (() => {
