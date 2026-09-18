@@ -989,9 +989,6 @@ const { $, $$ } = window.MTW;
 
     [
       'description',
-      'partNumber',
-      'extraNote',
-      'oldPrice'
     ].forEach(
       key => {
 
