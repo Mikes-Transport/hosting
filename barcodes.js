@@ -1,4 +1,4 @@
-console.log("barcodes")
+console.log("barcodes");
 
 'use strict';
 
