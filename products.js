@@ -1,3 +1,5 @@
+console.log('PRODUCTS.JS LOADED');
+
 const {
   db,
   $,
