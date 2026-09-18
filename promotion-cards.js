@@ -1567,19 +1567,16 @@ const { $, $$ } = window.MTW;
       }
     );
 
-    if (els.scrollBtn) {
-
-      els.scrollBtn.onclick =
-        e => {
-
-          e.preventDefault();
-          e.stopPropagation();
-
-          scrollCurrentCards(
-            els.cardView
-          );
-        };
+     if (scrollBtn && els.list && scrollBtn.parentElement !== els.list) {
+      els.list.appendChild(scrollBtn);
     }
+    if (scrollBtn) {
+    scrollBtn.onclick = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      scrollCurrentCards(els.cardView);
+    };
+  }
   }
 
   function chunk(a, n) {
