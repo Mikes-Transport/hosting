@@ -28,7 +28,7 @@
 
     const CARD =
       document.querySelector(
-        '.db-list-dropdown-toggle#barcode-drop'
+        '#barcode-drop'
       );
 
     if (!CARD) {
@@ -91,8 +91,7 @@
 
     MENU.appendChild(history);
 
-    CARD.insertAdjacentElement(
-      'afterend',
+    CARD.parentElement.appendChild(
       MENU
     );
 
@@ -104,30 +103,31 @@
       e => {
 
         e.preventDefault();
-        e.stopPropagation();
+        e.stopImmediatePropagation();
 
         const open =
-          MENU.style.display === 'block';
+          MENU.classList.contains(
+            'open'
+          );
 
-        MENU.style.display =
-          open ? 'none' : 'block';
+        document
+          .querySelectorAll(
+            '.barcode-dropdown-menu.open'
+          )
+          .forEach(menu => {
+            menu.classList.remove(
+              'open'
+            );
+          });
 
-      }
-    );
-
-    document.addEventListener(
-      'click',
-      e => {
-
-        if (
-          !CARD.contains(e.target) &&
-          !MENU.contains(e.target)
-        ) {
-          MENU.style.display =
-            'none';
+        if (!open) {
+          MENU.classList.add(
+            'open'
+          );
         }
 
-      }
+      },
+      true
     );
 
     MENU
@@ -143,19 +143,18 @@
             e.preventDefault();
             e.stopPropagation();
 
-            const template =
-              item.dataset
-                .barcodeTemplate;
-
-            MENU.style.display =
-              'none';
+            MENU.classList.remove(
+              'open'
+            );
 
             document.dispatchEvent(
               new CustomEvent(
                 'barcode-template-select',
                 {
                   detail: {
-                    template
+                    template:
+                      item.dataset
+                        .barcodeTemplate
                   }
                 }
               )
@@ -173,8 +172,9 @@
         e.preventDefault();
         e.stopPropagation();
 
-        MENU.style.display =
-          'none';
+        MENU.classList.remove(
+          'open'
+        );
 
         document.dispatchEvent(
           new CustomEvent(
@@ -185,19 +185,24 @@
       }
     );
 
+    document.addEventListener(
+      'click',
+      e => {
+
+        if (
+          !CARD.contains(e.target) &&
+          !MENU.contains(e.target)
+        ) {
+          MENU.classList.remove(
+            'open'
+          );
+        }
+
+      }
+    );
+
   }
 
-  if (
-    document.readyState ===
-    'loading'
-  ) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      init,
-      { once: true }
-    );
-  } else {
-    init();
-  }
+  init();
 
 })();
