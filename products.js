@@ -58,7 +58,7 @@ const {
   document.addEventListener(
     'db-tool-open',
     async e => {
-      if (e.detail.id !== 'products') {
+      if (e.detail?.id !== 'product-info') {
         return;
       }
 
