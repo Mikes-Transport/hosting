@@ -388,14 +388,14 @@ const { $, $$ } = window.MTW;
     els.list =
       $('.et-current-card-wrapper');
 
-    els.scrollBtnLeft =
-      $('.card-click-scroll-left');
-
     els.cardView =
       $('.card-view-container');
-
-    els.scrollBtnRight =
-      $('.card-click-scroll-right');
+    
+   els.scrollBtnLeft = 
+     $('.card-click-scroll-left');
+    
+   els.scrollBtnRight = 
+     $('.card-click-scroll-right');
 
     els.left =
       $('.db-left-content');
@@ -1569,7 +1569,7 @@ const { $, $$ } = window.MTW;
       e.stopPropagation();
 
       els.cardView.scrollBy({
-        left: -(els.cardView.clientWidth - 40),
+        left: -Math.max(1, els.cardView.clientWidth - 40),
         behavior: 'smooth'
       });
     };
@@ -1581,7 +1581,7 @@ const { $, $$ } = window.MTW;
       e.stopPropagation();
 
       els.cardView.scrollBy({
-        left: els.cardView.clientWidth - 40,
+        left: Math.max(1, els.cardView.clientWidth - 40),
         behavior: 'smooth'
       });
     };
