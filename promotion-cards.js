@@ -388,11 +388,14 @@ const { $, $$ } = window.MTW;
     els.list =
       $('.et-current-card-wrapper');
 
+    els.scrollBtnLeft =
+      $('.card-click-scroll-left');
+
     els.cardView =
       $('.card-view-container');
 
-    els.scrollBtn =
-      $('.card-click-scroll');
+    els.scrollBtnRight =
+      $('.card-click-scroll-right');
 
     els.left =
       $('.db-left-content');
@@ -1567,15 +1570,35 @@ const { $, $$ } = window.MTW;
       }
     );
 
-     if (scrollBtn && els.list && scrollBtn.parentElement !== els.list) {
-      els.list.appendChild(scrollBtn);
+     const scrollBtnLeft = els.scrollBtnLeft;
+    const scrollBtn = els.scrollBtnRight;
+    
+    if (scrollBtnLeft && els.list && scrollBtnLeft.parentElement !== els.list) {
+      els.list.appendChild(scrollBtnLeft);
     }
-    if (scrollBtn) {
-    scrollBtn.onclick = e => {
-      e.preventDefault();
-      e.stopPropagation();
-      scrollCurrentCards(els.cardView);
-    };
+    
+    if (scrollBtnRight && els.list && scrollBtnRight.parentElement !== els.list) {
+      els.list.appendChild(scrollBtnRight);
+    }
+    
+    if (scrollBtnLeft) {
+      scrollBtnLeft.onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        els.cardView.scrollBy({
+          left: -Math.max(1, els.cardView.clientWidth - 40),
+          behavior: 'smooth'
+        });
+      };
+    }
+    
+    if (scrollBtnRight) {
+      scrollBtnRight.onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollCurrentCards(els.cardView);
+      };
+    }
   }
   }
 
