@@ -1,3 +1,5 @@
+console.log("barcodes")
+
 'use strict';
 
 (function () {
@@ -31,10 +33,7 @@
         '#barcode-drop'
       );
 
-    if (!CARD) {
-      setTimeout(init, 100);
-      return;
-    }
+    if (!CARD) return;
 
     if (
       document.querySelector(
@@ -95,39 +94,18 @@
       MENU
     );
 
-    MENU.style.display =
-      'none';
-
     CARD.addEventListener(
       'click',
       e => {
 
         e.preventDefault();
-        e.stopImmediatePropagation();
+        e.stopPropagation();
 
-        const open =
-          MENU.classList.contains(
-            'open'
-          );
+        MENU.classList.toggle(
+          'open'
+        );
 
-        document
-          .querySelectorAll(
-            '.barcode-dropdown-menu.open'
-          )
-          .forEach(menu => {
-            menu.classList.remove(
-              'open'
-            );
-          });
-
-        if (!open) {
-          MENU.classList.add(
-            'open'
-          );
-        }
-
-      },
-      true
+      }
     );
 
     MENU
@@ -143,6 +121,10 @@
             e.preventDefault();
             e.stopPropagation();
 
+            const template =
+              item.dataset
+                .barcodeTemplate;
+
             MENU.classList.remove(
               'open'
             );
@@ -152,9 +134,7 @@
                 'barcode-template-select',
                 {
                   detail: {
-                    template:
-                      item.dataset
-                        .barcodeTemplate
+                    template
                   }
                 }
               )
@@ -203,6 +183,17 @@
 
   }
 
-  init();
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      init,
+      { once: true }
+    );
+  } else {
+    init();
+  }
 
 })();
