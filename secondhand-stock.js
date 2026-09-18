@@ -38,7 +38,7 @@ const { db, $, $$, collection, getDocs, doc, addDoc, updateDoc, deleteDoc } = wi
       .trim();
 
   document.addEventListener('db-tool-open', async e => {
-    if (e.detail.id !== 'secondhand-stock') return;
+    if (e.detail.id !== 'secondhand-tool') return;
 
     await load();
   });
