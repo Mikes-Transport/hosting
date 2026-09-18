@@ -3029,15 +3029,15 @@ const { $, $$ } = window.MTW;
             c,
             'price'
           ),
-          contentEditor(
+          simpleFieldEditor(
             c,
             'partNumber'
           ),
-          contentEditor(
+          simpleFieldEditor(
             c,
             'extraNote'
           ),
-          contentEditor(
+          simpleFieldEditor(
             c,
             'oldPrice'
           )
